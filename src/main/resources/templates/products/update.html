@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/main.html}">
+
+<div layout:fragment="content">
+
+    <h4 class="my-4">Update new product</h4>
+    <div>
+        <a class="btn btn-outline-danger" th:href="@{/products/{productId}/delete(productId=${productId})}">
+            Delete record
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+            <form role="form"
+                  method="post"
+                  th:action="@{/products/{productId}/update(productId=${productId})}"
+                  th:object="${product}">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <div>
+                    <label for="name">
+                        Name
+                    </label>
+                    <input id="name" type="text" th:field="*{name}"/>
+                </div>
+
+                <div>
+                    <label for="price">
+                        Price
+                    </label>
+                    <input id="price" type="number" th:field="*{price}"/>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Save changes</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</html>

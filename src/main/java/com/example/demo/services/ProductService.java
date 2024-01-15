@@ -33,4 +33,36 @@ public class ProductService {
                 .build();
     }
 
+    public Product create(ProductDTO productDTO) {
+        var product = mapToEntity(productDTO);
+        return productRepository.save(product);
+    }
+
+    public ProductDTO findById(long productId) {
+        var productOptional = productRepository.findById(productId);
+        if (productOptional.isEmpty()) {
+            return null;
+        }
+        var product = productOptional.get();
+        return mapToDTO(product);
+    }
+
+    public void update(ProductDTO productDTO) {
+        Product product = mapToEntity(productDTO);
+        productRepository.save(product);
+    }
+
+    private Product mapToEntity(ProductDTO productDTO) {
+        return Product.builder()
+            .id(productDTO.getId())
+            .name(productDTO.getName())
+            .price(productDTO.getPrice())
+            .createdOn(productDTO.getCreatedOn())
+            .updatedOn(productDTO.getUpdatedOn())
+            .build();
+    }
+
+    public void delete(long productId) {
+        productRepository.deleteById(productId);
+    }
 }
