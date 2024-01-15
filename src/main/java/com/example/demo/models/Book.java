@@ -15,15 +15,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "books")
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double price;
-
+    private String author;
+    
+    private Boolean isActive = true;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

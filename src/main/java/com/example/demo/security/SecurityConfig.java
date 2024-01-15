@@ -70,15 +70,16 @@ public class SecurityConfig {
         return (request, response, exception) -> {
             String errorMessage = exception.getMessage();
 
-//            if (exception instanceof LockedException) {
-//                errorMessage = "Your account has been locked due to multiple failed login attempts. Please contact the administrator.";
-//            } else if (exception instanceof DisabledException) {
-//                errorMessage = "Your account has been disabled. Please contact the administrator.";
-//            } else if (exception instanceof BadCredentialsException) {
-//                errorMessage = "Invalid username or password";
-//            }
+            if (exception instanceof LockedException) {
+                errorMessage =
+                        "Your account has been locked due to multiple failed login attempts." +
+                        " Please contact the administrator.";
+            } else if (exception instanceof DisabledException) {
+                errorMessage = "Your account has been disabled. Please contact the administrator.";
+            } else if (exception instanceof BadCredentialsException) {
+                errorMessage = "Invalid username or password";
+            }
 
-            // Thực hiện xử lý sau khi đăng nhập thất bại ở đây
             response.sendRedirect("/login?error=true&message=" + errorMessage);
         };
     }
