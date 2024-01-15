@@ -50,8 +50,8 @@ public class SecurityConfig {
                 .formLogin(form ->
                         form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/abc", true)
-                        .failureUrl("/nothing")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login")
                         .failureHandler(authenticationFailureHandler())
                 )
                 .logout(logout ->

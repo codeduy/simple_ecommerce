@@ -1,6 +1,7 @@
 package com.example.demo.services.imp;
 
 import com.example.demo.dto.RegistrationDTO;
+import com.example.demo.forms.RegistrationForm;
 import com.example.demo.models.Role;
 import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.RoleRepository;
@@ -31,11 +32,10 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void register(@NotNull RegistrationDTO registrationDTO) {
+    public void register(@NotNull RegistrationForm form) {
         UserEntity user = new UserEntity();
-
-        user.setUserName(registrationDTO.getUserName());
-        String hashedPassword = encoder.encode(registrationDTO.getPassword());
+        user.setUserName(form.getUsername());
+        String hashedPassword = encoder.encode(form.getPassword());
         user.setPassword(hashedPassword);
         Role role = roleRepository.findByName("USER");
         user.setRoles(Collections.singletonList(role));
