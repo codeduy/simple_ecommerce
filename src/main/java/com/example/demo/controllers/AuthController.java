@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.RegistrationDTO;
 import com.example.demo.forms.RegistrationForm;
+import com.example.demo.forms.SignInForm;
 import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
@@ -27,7 +28,16 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        SignInForm form = new SignInForm();
+        model.addAttribute("form", form);
+        return "auth/login";
+    }
+
+    @PostMapping("/process/login")
+    public String login(
+            @ModelAttribute("form") RegistrationForm form
+    ) {
         return "auth/login";
     }
 

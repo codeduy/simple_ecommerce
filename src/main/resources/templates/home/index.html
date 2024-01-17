@@ -2,16 +2,23 @@
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layouts/main.html}">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/main.html}" >
 
 <div layout:fragment="content">
 
+    <!--Test-->
+    <h3 sec:authentication="name">name here</h3>
+
+    Logged user: <span sec:authentication="name">Bob</span>
+    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+    <!--Test-->
+
     <h4 class="my-4">Newest product</h4>
 
-    <div th:if="${list.empty}">
+    <div th:if="${list.isEmpty()}">
         <h3> Nothing found </h3>
     </div>
-
 
     <div class="row">
         <!-- Card -->

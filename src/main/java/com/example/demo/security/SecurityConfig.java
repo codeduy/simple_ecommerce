@@ -9,12 +9,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +27,6 @@ public class SecurityConfig {
     public SecurityConfig(UserService userService) {
         this.userService = userService;
     }
-
 
     @Bean
     AuthenticationProvider authenticationProvider() {
@@ -37,51 +39,68 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth ->
-                        auth
-                        .requestMatchers("/admin/**")
-                        .hasRole("ADMIN")
-                        .requestMatchers("/login*", "/register*")
-                        .permitAll()
-                        .anyRequest()
-                        .permitAll()
+                .authorizeRequests(authorize -> authorize
+                        .anyRequest().authenticated()
                 )
-                .formLogin(form ->
-                        form
+//                .formLogin(withDefaults())
+                .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/login")
-                        .failureHandler(authenticationFailureHandler())
+                        .permitAll()
+//                        .loginProcessingUrl()
                 )
-                .logout(logout ->
-                        logout
-                        .logoutUrl("/logout")
-                        .deleteCookies("JSESSIONID")
-                )
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                .httpBasic(withDefaults());
         return http.build();
     }
 
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return (request, response, exception) -> {
-            String errorMessage = exception.getMessage();
 
-            if (exception instanceof LockedException) {
-                errorMessage =
-                        "Your account has been locked due to multiple failed login attempts." +
-                        " Please contact the administrator.";
-            } else if (exception instanceof DisabledException) {
-                errorMessage = "Your account has been disabled. Please contact the administrator.";
-            } else if (exception instanceof BadCredentialsException) {
-                errorMessage = "Invalid username or password";
-            }
-
-            response.sendRedirect("/login?error=true&message=" + errorMessage);
-        };
-    }
-
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+////                .userDetailsService(userService)
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(auth ->
+//                        auth
+//                        .requestMatchers("/admin/**")
+//                        .hasRole("ADMIN")
+//                        .requestMatchers("/login*", "/register*")
+//                        .permitAll()
+//                        .anyRequest()
+//                        .permitAll()
+//                )
+//                .formLogin(form ->
+//                        form
+//                        .loginPage("/login")
+//                        .defaultSuccessUrl("/", true)
+//                        .failureUrl("/login")
+//                        .failureHandler(authenticationFailureHandler())
+//                )
+//                .logout(logout ->
+//                        logout
+//                        .logoutUrl("/logout")
+//                        .deleteCookies("JSESSIONID")
+//                )
+//                .sessionManagement(session ->
+//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                );
+//        return http.build();
+//    }
+//
+//    @Bean
+//    public AuthenticationFailureHandler authenticationFailureHandler() {
+//        return (request, response, exception) -> {
+//            String errorMessage = exception.getMessage();
+//
+//            if (exception instanceof LockedException) {
+//                errorMessage =
+//                        "Your account has been locked due to multiple failed login attempts." +
+//                        " Please contact the administrator.";
+//            } else if (exception instanceof DisabledException) {
+//                errorMessage = "Your account has been disabled. Please contact the administrator.";
+//            } else if (exception instanceof BadCredentialsException) {
+//                errorMessage = "Invalid username or password";
+//            }
+//
+//            response.sendRedirect("/login?error=true&message=" + errorMessage);
+//        };
+//    }
 }
