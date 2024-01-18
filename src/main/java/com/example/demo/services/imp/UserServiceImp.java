@@ -1,6 +1,5 @@
 package com.example.demo.services.imp;
 
-import com.example.demo.dto.RegistrationDTO;
 import com.example.demo.forms.RegistrationForm;
 import com.example.demo.models.Role;
 import com.example.demo.models.UserEntity;
@@ -19,7 +18,6 @@ import java.util.Collections;
 @Service
 public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
-
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 

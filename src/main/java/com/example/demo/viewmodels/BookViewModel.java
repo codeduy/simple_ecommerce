@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.viewmodels;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,11 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductDTO {
+public class BookViewModel {
     private Long id;
-    @NotEmpty(message = "This field is required")
     private String name;
-    @NotNull(message = "This field is required")
     private Double price ;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;

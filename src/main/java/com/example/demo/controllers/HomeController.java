@@ -25,8 +25,4 @@ public class HomeController {
         return "home/index";
     }
 
-    public boolean isUserLoggedIn() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser");
-    }
 }

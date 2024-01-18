@@ -39,52 +39,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorize -> authorize
-                        .anyRequest().authenticated()
+                        .requestMatchers("/login", "/register").permitAll()
+                        .anyRequest().permitAll()
                 )
-//                .formLogin(withDefaults())
                 .formLogin(login -> login
                         .loginPage("/login")
                         .permitAll()
-//                        .loginProcessingUrl()
                 )
-                .httpBasic(withDefaults());
+                .logout(logout -> logout
+//                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                )
+                .httpBasic(withDefaults()
+                );
         return http.build();
     }
 
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-////                .userDetailsService(userService)
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(auth ->
-//                        auth
-//                        .requestMatchers("/admin/**")
-//                        .hasRole("ADMIN")
-//                        .requestMatchers("/login*", "/register*")
-//                        .permitAll()
-//                        .anyRequest()
-//                        .permitAll()
-//                )
-//                .formLogin(form ->
-//                        form
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/", true)
-//                        .failureUrl("/login")
-//                        .failureHandler(authenticationFailureHandler())
-//                )
-//                .logout(logout ->
-//                        logout
-//                        .logoutUrl("/logout")
-//                        .deleteCookies("JSESSIONID")
-//                )
-//                .sessionManagement(session ->
-//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                );
-//        return http.build();
-//    }
-//
 //    @Bean
 //    public AuthenticationFailureHandler authenticationFailureHandler() {
 //        return (request, response, exception) -> {

@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.dto.RegistrationDTO;
 import com.example.demo.forms.RegistrationForm;
 import com.example.demo.models.UserEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;

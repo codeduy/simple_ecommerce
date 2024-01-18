@@ -5,37 +5,38 @@
       layout:decorate="~{layouts/main.html}">
 
 <div layout:fragment="content">
-    <div class="d-flex justify-content-center">
-        <div class="mt-4 p-4 card col-12 col-sm-10 col-md-8 col-sm-6 col-xl-5 col-xxl-4">
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="mt-4 p-4 card col-12 col-sm-10 col-md-8 col-sm-6 col-xl-5 col-xxl-4">
 
-            <h2 class="text-center my-2">My Login</h2>
+                <h2 class="text-center my-2">My Login</h2>
 
-            <form th:action="@{/login}" method="post" th:object="${form}">
+                <form th:action="@{/login}" method="post" th:object="${form}">
 
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" th:field="*{username}" />
-                </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" th:field="*{username}" />
+                    </div>
 
-                <div  class="mb-3">
-                    <label for="password" class="form-label" >Password</label>
-                    <input type="password" id="password" name="password" class="form-control" th:field="*{password}"/>
-                </div>
+                    <div  class="mb-3">
+                        <label for="password" class="form-label" >Password</label>
+                        <input type="password" id="password" name="password" class="form-control" th:field="*{password}"/>
+                    </div>
 
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
 
-                <p th:if="${param.error}">
-                    Invalid username or password.
-                </p>
+                    <p th:if="${param.error}">
+                        Invalid username or password.
+                    </p>
 
-            </form>
-            <hr>
-            <span class="text-center text-mute">New member? <a href="/register">Sign up now</a></span>
+                </form>
+                <hr>
+                <span class="text-center text-mute">New member? <a href="/register">Sign up now</a></span>
+            </div>
         </div>
     </div>
-
 </div>
 
 </html>

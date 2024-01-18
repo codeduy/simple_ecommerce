@@ -6,36 +6,45 @@
 
 <div layout:fragment="content">
 
-    <h4 class="my-4">List product</h4>
-    <!--Empty-->
-    <div th:if="${list.empty}">
-        <h3> Nothing found </h3>
-    </div>
-    <!--Else-->
-    <table class="table">
-        <thead>
+    <div class="container mt-2">
+        <h4 class="my-4">List product</h4>
+        <a class="btn btn-success" href="/admin/products/create">Add new product</a>
+
+        <!--Empty-->
+        <div th:if="${list.isEmpty()}">
+            <h3> Nothing found </h3>
+        </div>
+        <!--Else-->
+        <table th:unless="${list.isEmpty()}"
+                class="table">
+            <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
+                <th scope="col">created</th>
+                <th scope="col">updated</th>
                 <th scope="col"></th>
             </tr>
-        </thead>
+            </thead>
 
-        <tbody>
+            <tbody>
             <tr th:each="item : ${list}">
                 <th scope="row">1</th>
                 <td th:text="${item.name}">Product name</td>
                 <td  th:text="${item.price}">Price</td>
+                <td  th:text="${item.createdOn}">Price</td>
+                <td  th:text="${item.updatedOn}">Price</td>
                 <td>
-                    <a th:href="@{/products/{productId}/update(productId=${item.id})}"
+                    <a th:href="@{/templates/books/{productId}/update(productId=${item.id})}"
                        class="btn">
                         <i class="fa-solid fa-chevron-right"></i>
                     </a>
                 </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </html>

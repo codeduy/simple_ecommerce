@@ -7,75 +7,70 @@
 
 <div layout:fragment="content">
 
-    <!--Test-->
-    <h3 sec:authentication="name">name here</h3>
+    <div class="container">
 
-    Logged user: <span sec:authentication="name">Bob</span>
-    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
-    <!--Test-->
+        <h4 class="my-4">Newest product</h4>
 
-    <h4 class="my-4">Newest product</h4>
+        <div th:if="${list.isEmpty()}">
+            <h3> Nothing found </h3>
+        </div>
 
-    <div th:if="${list.isEmpty()}">
-        <h3> Nothing found </h3>
-    </div>
+        <div class="row">
+            <!-- Card -->
+            <div th:each="item : ${list}" class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
 
-    <div class="row">
-        <!-- Card -->
-        <div th:each="item : ${list}" class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div class="card">
-
-                <div class="text-end">
-                    <a href="#" class="btn" data-bs-toggle="tooltip" data-bs-title="Mark this product">
-                        <i class="fa-regular fa-bookmark"></i>
-                    </a>
-                </div>
-
-                <img src="https://images-na.ssl-images-amazon.com/images/I/61rC7j690VL._AC_SL1500_.jpg"
-                     class="card-img-top p-4">
-
-                <div class="card-body">
-                    <div>
-                        <h5 class="card-title" th:text="${item.name}">Product name</h5>
-                        <div class="d-flex justify-content-start gap-1">
-                            <h6>$</h6>
-                            <h6 class="card-title" th:text="${item.price}">$999</h6>
-                        </div>
+                    <div class="text-end">
+                        <a href="#" class="btn" data-bs-toggle="tooltip" data-bs-title="Mark this product">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </a>
                     </div>
 
-                    <a href="#" class="btn btn-primary">Buy now</a>
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/61rC7j690VL._AC_SL1500_.jpg"
+                         class="card-img-top p-4">
 
-                    <!-- Rating -->
-                    <div class="mt-2">
-                        <div class="d-flex justfify-content-start gap-2">
-                            <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                            <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                            <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                            <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                            <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title" th:text="${item.name}">Product name</h5>
+                            <div class="d-flex justify-content-start gap-1">
+                                <h6>$</h6>
+                                <h6 class="card-title" th:text="${item.price}">$999</h6>
+                            </div>
                         </div>
-                    </div>
 
-                    <a th:href="@{/products/{productId}/update(productId=${item.id})}"
-                        class="btn btn-warning">
-                      update
-                    </a>
+                        <a href="#" class="btn btn-primary">Buy now</a>
+
+                        <!-- Rating -->
+                        <div class="mt-2">
+                            <div class="d-flex justfify-content-start gap-2">
+                            <span class="text-warning">
+                                <i class="fa-regular fa-star"></i>
+                            </span>
+                                <span class="text-warning">
+                                <i class="fa-regular fa-star"></i>
+                            </span>
+                                <span class="text-warning">
+                                <i class="fa-regular fa-star"></i>
+                            </span>
+                                <span class="text-warning">
+                                <i class="fa-regular fa-star"></i>
+                            </span>
+                                <span class="text-warning">
+                                <i class="fa-regular fa-star"></i>
+                            </span>
+                            </div>
+                        </div>
+
+                        <a th:href="@{/templates/books/{productId}/update(productId=${item.id})}"
+                           class="btn btn-warning">
+                            update
+                        </a>
+                    </div>
                 </div>
             </div>
+            <!-- End card -->
         </div>
-        <!-- End card -->
     </div>
-
 </div>
 
 </html>

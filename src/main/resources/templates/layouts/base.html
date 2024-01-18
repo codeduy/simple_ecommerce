@@ -12,19 +12,23 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
-<div layout:fragment="header">
+<!-- -->
+<section layout:fragment="header">
   <p>Override header here!</p>
-</div>
+</section>
+<!---->
 
-<div class="container">
-  <div layout:fragment="content">
+<!---->
+<main class="pt-4">
+  <div layout:fragment="content" class="mt-5">
     <p>Body contents here!</p>
   </div>
-</div>
+</main>
+<!---->
 
-<div layout:fragment="footer">
-</div>
+<!---->
+<div layout:fragment="footer"></div>
+<!---->
 
 <!-- js lib -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

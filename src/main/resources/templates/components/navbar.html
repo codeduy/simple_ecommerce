@@ -2,42 +2,108 @@
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div layout:fragment="navbar">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<!--    <nav class="navbar navbar-expand-lg bg-body-tertiary">-->
+<!--        <div class="container">-->
+<!--            <a class="navbar-brand" href="/">BFly</a>-->
+<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"-->
+<!--                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--            </button>-->
+<!--            <div class="collapse navbar-collapse" id="navbarNav">-->
+
+<!--                <ul class="navbar-nav me-auto">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" aria-current="page" href="#">Home</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#">Features</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#">Pricing</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+
+<!--                &lt;!&ndash; if user logged in &ndash;&gt;-->
+<!--                <div th:if="${#authorization.expression('isAuthenticated()')}"-->
+<!--                     class="dropdown">-->
+<!--                    <button class="btn dropdown-toggle"-->
+<!--                            type="button"-->
+<!--                            data-bs-toggle="dropdown"-->
+<!--                            aria-expanded="false">-->
+<!--                            &lt;!&ndash; Insert username &ndash;&gt;-->
+<!--                        <span sec:authentication="name">username is display here</span>-->
+<!--                    </button>-->
+<!--                    <ul class="dropdown-menu dropdown-menu-end">-->
+<!--                        <li sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                            <a class="dropdown-item" href="/dashboard">Admin panel</a>-->
+<!--                        </li>-->
+<!--                        <li><hr class="dropdown-divider"></li>-->
+<!--                        <li>-->
+<!--                            <a class="dropdown-item" href="/logout">Logout</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+
+
+<!--                &lt;!&ndash; else &ndash;&gt;-->
+<!--                <div th:if="${#authorization.expression('isAnonymous()')}">-->
+<!--                    <a  class="btn" href="/login">-->
+<!--                        <i class="fa-solid fa-arrow-right-to-bracket"></i>-->
+<!--                        <span  class="ms-2">-->
+<!--                        Login-->
+<!--                    </span>-->
+<!--                    </a>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+    <nav layout:fragment="navbar"
+         class="navbar bg-body-tertiary fixed-top">
+
         <div class="container">
-            <a class="navbar-brand" href="#">BFly</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <a class="navbar-brand me-auto ms-2 fw-semibold" href="/">FAHASA</a>
 
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                    </li>
-                </ul>
-
-                <a class="btn" href="/login">
-                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                    <span  class="ms-2">
-                        Login
-                    </span>
-                </a>
-
+            <div type="button" data-bs-toggle="offcanvas"
+                 data-bs-target="#offcanvasNavbar"
+                 aria-controls="offcanvasNavbar"
+                 aria-label="Toggle navigation">
+                <i class="fa-solid fa-user"></i>
+                username
             </div>
+
+            <!-- Offcanva for user infor -->
+            <div class="offcanvas offcanvas-end"
+                 tabindex="-1"
+                 id="offcanvasNavbar"
+                 data-bs-scroll="true"
+                 data-bs-backdrop="false"
+                 aria-labelledby="offcanvasNavbarLabel">
+                <!--header-->
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Welcome Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/products/">Products</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end Offcanva for user infor -->
         </div>
     </nav>
-</div>
+
 </html>

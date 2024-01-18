@@ -8,7 +8,7 @@
 
     <h4 class="my-4">Update new product</h4>
     <div>
-        <a class="btn btn-outline-danger" th:href="@{/products/{productId}/delete(productId=${productId})}">
+        <a class="btn btn-outline-danger" th:href="@{/templates/books/{productId}/delete(productId=${productId})}">
             Delete record
         </a>
     </div>
@@ -17,7 +17,7 @@
         <div class="col-12 col-sm-9 col-md-6 col-lg-4">
             <form role="form"
                   method="post"
-                  th:action="@{/products/{productId}/update(productId=${productId})}"
+                  th:action="@{/templates/books/{productId}/update(productId=${productId})}"
                   th:object="${product}">
 
                 <input type="hidden" th:field="*{id}"/>

@@ -1,10 +1,12 @@
 package com.example.demo.services.imp;
 
-import com.example.demo.dto.ProductDTO;
+import com.example.demo.forms.BookForm;
+import com.example.demo.viewmodels.BookViewModel;
 import com.example.demo.models.Book;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,19 +15,44 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImp implements ProductService {
     private final ProductRepository productRepository;
-
     @Autowired
     public ProductServiceImp(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public List<ProductDTO> listAll() {
-        var list = productRepository.findAll();
-        return list.stream().map(this::mapToDTO).collect(Collectors.toList());
+    public List<BookViewModel> listAll() {
+        var list = productRepository
+                .findAll(Sort.by(Sort.Direction.DESC, "updatedOn"));
+        return list.stream().map(this::mapToViewModel).collect(Collectors.toList());
     }
 
-    private ProductDTO mapToDTO(Book product) {
-        return ProductDTO.builder()
+    @Override
+    public BookViewModel create(BookForm form) {
+        Book entity = mapToEntity(form);
+        Book entityCreated = productRepository.save(entity);
+        return mapToViewModel(entityCreated);
+    }
+
+    public BookViewModel findById(long productId) {
+        var productOptional = productRepository.findById(productId);
+        if (productOptional.isEmpty()) {
+            return null;
+        }
+        var product = productOptional.get();
+        return mapToViewModel(product);
+    }
+
+    public void update(BookViewModel BookViewModel) {
+//        Book product = mapToEntity(BookViewModel);
+//        productRepository.save(product);
+    }
+
+    public void delete(long productId) {
+        productRepository.deleteById(productId);
+    }
+
+    private BookViewModel mapToViewModel(Book product) {
+        return BookViewModel.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
@@ -34,36 +61,11 @@ public class ProductServiceImp implements ProductService {
                 .build();
     }
 
-    public Book create(ProductDTO productDTO) {
-        var product = mapToEntity(productDTO);
-        return productRepository.save(product);
-    }
-
-    public ProductDTO findById(long productId) {
-        var productOptional = productRepository.findById(productId);
-        if (productOptional.isEmpty()) {
-            return null;
-        }
-        var product = productOptional.get();
-        return mapToDTO(product);
-    }
-
-    public void update(ProductDTO productDTO) {
-        Book product = mapToEntity(productDTO);
-        productRepository.save(product);
-    }
-
-    private Book mapToEntity(ProductDTO productDTO) {
+    private Book mapToEntity(BookForm form) {
         return Book.builder()
-                .id(productDTO.getId())
-                .name(productDTO.getName())
-                .price(productDTO.getPrice())
-                .createdOn(productDTO.getCreatedOn())
-                .updatedOn(productDTO.getUpdatedOn())
+                .id(form.getId())
+                .name(form.getName())
+                .price(form.getPrice())
                 .build();
-    }
-
-    public void delete(long productId) {
-        productRepository.deleteById(productId);
     }
 }

@@ -1,16 +1,10 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.RegistrationDTO;
 import com.example.demo.forms.RegistrationForm;
 import com.example.demo.forms.SignInForm;
-import com.example.demo.models.UserEntity;
-import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
