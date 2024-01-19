@@ -22,7 +22,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
-                <th scope="col">created</th>
+                <th scope="col">Cover</th>
+                <th scope="col">Created</th>
                 <th scope="col">updated</th>
                 <th scope="col"></th>
             </tr>
@@ -32,7 +33,10 @@
             <tr th:each="item : ${list}">
                 <th scope="row">1</th>
                 <td th:text="${item.name}">Product name</td>
-                <td  th:text="${item.price}">Price</td>
+                <td th:text="${item.price}">Price</td>
+                <td >
+                    <img th:src="@{'/uploads/books/' + ${item.imagePath}}" alt="Image" width="50" />
+                </td>
                 <td  th:text="${item.createdOn}">Price</td>
                 <td  th:text="${item.updatedOn}">Price</td>
                 <td>

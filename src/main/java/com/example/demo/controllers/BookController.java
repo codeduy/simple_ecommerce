@@ -63,9 +63,11 @@ public class BookController {
         if (result.hasErrors()) {
             return "/books/create";
         }
-        // sua lai tra ve ten ngau nhien uid
+        // save file and get file name
         String fileName = uploadService.save(file, "books");
-        // cap nhat ten vao doi tuong form
+        // update path to form object
+        form.setImagePath(fileName);
+        // save to db
         productService.create(form);
         return "redirect:/admin/products/";
     }

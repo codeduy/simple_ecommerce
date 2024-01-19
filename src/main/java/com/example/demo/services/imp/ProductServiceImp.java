@@ -51,13 +51,14 @@ public class ProductServiceImp implements ProductService {
         productRepository.deleteById(productId);
     }
 
-    private BookViewModel mapToViewModel(Book product) {
+    private BookViewModel mapToViewModel(Book entity) {
         return BookViewModel.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .createdOn(product.getCreatedOn())
-                .updatedOn(product.getUpdatedOn())
+                .id(entity.getId())
+                .name(entity.getName())
+                .price(entity.getPrice())
+                .imagePath(entity.getImagePath())
+                .createdOn(entity.getCreatedOn())
+                .updatedOn(entity.getUpdatedOn())
                 .build();
     }
 
@@ -66,6 +67,7 @@ public class ProductServiceImp implements ProductService {
                 .id(form.getId())
                 .name(form.getName())
                 .price(form.getPrice())
+                .imagePath(form.getImagePath())
                 .build();
     }
 }

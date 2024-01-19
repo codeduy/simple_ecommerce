@@ -19,4 +19,5 @@ public class BookViewModel {
     private Double price ;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
+    private String imagePath;
 }

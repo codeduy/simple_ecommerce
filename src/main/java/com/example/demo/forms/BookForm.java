@@ -19,7 +19,6 @@ public class BookForm {
     @NotBlank(message = "Please enter book author")
     private String author;
     private String imagePath;
-
     private Boolean isActive = true;
 
 }

@@ -30,5 +30,5 @@ public class Book {
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-
+    private String imagePath;
 }
