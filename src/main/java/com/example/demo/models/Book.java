@@ -24,11 +24,12 @@ public class Book {
     private String name;
     private Double price;
     private String author;
-    
+    private String imagePath;
     private Boolean isActive = true;
+
+
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-    private String imagePath;
 }

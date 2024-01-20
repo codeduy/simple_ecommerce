@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.forms.BookForm;
+import com.example.demo.models.Book;
 import com.example.demo.services.UploadService;
 import com.example.demo.viewmodels.BookViewModel;
 import jakarta.validation.Valid;
@@ -9,28 +10,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.services.ProductService;
+import com.example.demo.services.BookService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin/books/")
 public class BookController {
-    private final ProductService productService;
+    private final BookService bookService;
     private final UploadService uploadService;
 
     @Autowired
     public BookController(
-            ProductService productService,
+            BookService bookService,
             UploadService uploadService) {
-        this.productService = productService;
+        this.bookService = bookService;
         this.uploadService = uploadService;
     }
 
     @GetMapping("")
     public String index(Model model) {
-        var list = productService.listAll();
+        List<BookViewModel> list = bookService
+                .listAll()
+                .stream().map(bookService::mapToViewModel)
+                .collect(Collectors.toList());
+
         model.addAttribute("list", list);
         return "books/index";
     }
@@ -54,7 +61,7 @@ public class BookController {
                     "Image missing",
                     "Please choose an image");
         }
-
+        // return and show error
         if (result.hasErrors()) {
             return "/books/create";
         }
@@ -63,34 +70,54 @@ public class BookController {
         // update path to form object
         form.setImagePath(fileName);
         // save to db
-        productService.create(form);
-        return "redirect:/admin/products/";
+        bookService.create(form);
+        return "redirect:/admin/books/";
     }
 
-    @GetMapping("{productId}/update")
+    @GetMapping("update/{id}")
     public String updatePage(
-            @PathVariable("productId") long productId,
+            @PathVariable("id") long id,
             Model model) {
-        BookForm form = productService.getForUpdate(productId);
+        Book entity = bookService.findById(id);
+        BookForm form = bookService.mapToForm(entity);
         model.addAttribute("form", form);
         return "books/update";
     }
-    @PostMapping("{productId}/update")
+
+    @PostMapping("update/{id}")
     public String handleUpdate(
-            @PathVariable("productId") long productId,
-            @ModelAttribute("product") BookViewModel product) {
+            @PathVariable("id") long id,
+            @ModelAttribute("form") BookForm form,
+            @PathVariable("file") MultipartFile file,
+            BindingResult result) throws IOException {
 
-        product.setId(productId);
-        productService.update(product);
+        if (!form.getId().equals(id)) {
+            result.rejectValue(
+                    "id",
+                    "id error",
+                    "Id doesn't match");
+        }
 
-        return "redirect:/products/";
+        if (result.hasErrors()) {
+            return "books/update";
+        }
+
+        if (!file.isEmpty()) {
+            String fileName = uploadService.save(file, "books");
+            // update path to form object
+            form.setImagePath(fileName);
+        }
+
+        bookService.update(form);
+
+        return "redirect:/admin/books/";
     }
 
-    @GetMapping("/{productId}/delete")
+    @GetMapping("delete/{id}")
     public String handleDelete(
-            @PathVariable("productId") long productId) {
-        productService.delete(productId);
-        return "redirect:/products/";
+            @PathVariable("id") long id) {
+        bookService.delete(id);
+        return "redirect:/admin/books/";
     }
 }
 

@@ -1,3 +1,5 @@
+console.log('previewImage.js')
+
 $(document).ready(function(){
 
     $("#upload-file-zone").click(function() {

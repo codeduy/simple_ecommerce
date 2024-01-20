@@ -41,7 +41,7 @@
                 <th scope="col">Price</th>
                 <th scope="col">Cover</th>
                 <th scope="col">Created</th>
-                <th scope="col">updated</th>
+                <th scope="col">Updated</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -49,15 +49,15 @@
             <tbody>
             <tr th:each="item : ${list}">
                 <th scope="row">1</th>
-                <td th:text="${item.name}">Product name</td>
-                <td th:text="${item.price}">Price</td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.price}"></td>
                 <td >
                     <img th:src="@{'/uploads/books/' + ${item.imagePath}}" alt="Image" width="50" />
                 </td>
-                <td  th:text="${item.createdOn}">Price</td>
-                <td  th:text="${item.updatedOn}">Price</td>
+                <td  th:text="${item.createdOn}"></td>
+                <td  th:text="${item.updatedOn}"></td>
                 <td>
-                    <a th:href="@{/admin/books/{productId}/update(productId=${item.id})}"
+                    <a th:href="@{/admin/books/update/{id}(id=${item.id})}"
                        class="btn">
                         <i class="fa-solid fa-chevron-right"></i>
                     </a>
