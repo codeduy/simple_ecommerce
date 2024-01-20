@@ -7,13 +7,30 @@
 <div layout:fragment="content">
 
     <div class="container mt-2">
-        <h4 class="my-4">List product</h4>
-        <a class="btn btn-success" href="/admin/products/create">Add new product</a>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="my-2">List product</h3>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin/dashboard">Admin</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Books</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="py-2 d-flex justify-content-end">
+            <a class="btn btn-success btn-sm" href="/admin/books/create">
+                <i class="fa-solid fa-plus"></i>
+                Add new product
+            </a>
+        </div>
+
 
         <!--Empty-->
         <div th:if="${list.isEmpty()}">
             <h3> Nothing found </h3>
         </div>
+
         <!--Else-->
         <table th:unless="${list.isEmpty()}"
                 class="table">
@@ -40,7 +57,7 @@
                 <td  th:text="${item.createdOn}">Price</td>
                 <td  th:text="${item.updatedOn}">Price</td>
                 <td>
-                    <a th:href="@{/templates/books/{productId}/update(productId=${item.id})}"
+                    <a th:href="@{/admin/books/{productId}/update(productId=${item.id})}"
                        class="btn">
                         <i class="fa-solid fa-chevron-right"></i>
                     </a>

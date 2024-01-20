@@ -42,6 +42,15 @@ public class ProductServiceImp implements ProductService {
         return mapToViewModel(product);
     }
 
+    public BookForm getForUpdate(long id) {
+        var entityOptional = productRepository.findById(id);
+        if (entityOptional.isEmpty()) {
+            return null;
+        }
+        var product = entityOptional.get();
+        return mapToForm(product);
+    }
+
     public void update(BookViewModel BookViewModel) {
 //        Book product = mapToEntity(BookViewModel);
 //        productRepository.save(product);
@@ -68,6 +77,15 @@ public class ProductServiceImp implements ProductService {
                 .name(form.getName())
                 .price(form.getPrice())
                 .imagePath(form.getImagePath())
+                .build();
+    }
+
+    private BookForm mapToForm(Book entity) {
+        return BookForm.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .price(entity.getPrice())
+                .imagePath(entity.getImagePath())
                 .build();
     }
 }

@@ -1,11 +1,9 @@
 package com.example.demo.controllers;
 
 import com.example.demo.forms.BookForm;
-import com.example.demo.models.Book;
 import com.example.demo.services.UploadService;
 import com.example.demo.viewmodels.BookViewModel;
 import jakarta.validation.Valid;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +13,9 @@ import com.example.demo.services.ProductService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 @Controller
-@RequestMapping("admin/products/")
+@RequestMapping("/admin/books/")
 public class BookController {
     private final ProductService productService;
     private final UploadService uploadService;
@@ -72,15 +67,15 @@ public class BookController {
         return "redirect:/admin/products/";
     }
 
-    @GetMapping("/{productId}/update")
-    public String update(
+    @GetMapping("{productId}/update")
+    public String updatePage(
             @PathVariable("productId") long productId,
             Model model) {
-        BookViewModel dto = productService.findById(productId);
-        model.addAttribute("product", dto);
-        return "products/update";
+        BookForm form = productService.getForUpdate(productId);
+        model.addAttribute("form", form);
+        return "books/update";
     }
-    @PostMapping("/{productId}/update")
+    @PostMapping("{productId}/update")
     public String handleUpdate(
             @PathVariable("productId") long productId,
             @ModelAttribute("product") BookViewModel product) {

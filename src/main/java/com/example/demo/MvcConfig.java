@@ -12,9 +12,17 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Value("${upload.path}")
     private String ROOT_DIRECTORY;
+    @Value("${static.path}")
+    private String STATIC_FOLDER_PATH;
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:/" + ROOT_DIRECTORY);
+
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("file:/" + STATIC_FOLDER_PATH);
+
     }
 }
+
+

@@ -13,4 +13,5 @@ public interface ProductService {
     BookViewModel findById(long productId);
     void update(BookViewModel BookViewModel);
     void delete(long productId);
+    BookForm getForUpdate(long id);
 }
