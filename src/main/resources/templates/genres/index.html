@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/main.html}">
+
+<div layout:fragment="content">
+    <div class="container">
+
+        <div class="">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin/dashboard">Admin</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Authors</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="text-end">
+            <a href="/admin/genres/create" class="btn btn-success">
+                Add new author
+            </a>
+        </div>
+
+        <ul>
+            <li th:each="item : ${list}">
+                <span th:text="${item.name}"></span>
+                <a th:href="@{/admin/genres/update/{id}(id=${item.id})}"
+                   class="btn btn-warning">
+                    Details
+                </a>
+                <a th:href="@{/admin/genres/delete/{id}(id=${item.id})}"
+                   class="btn btn-danger">
+                    Delete
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</html>
