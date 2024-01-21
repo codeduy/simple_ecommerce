@@ -2,6 +2,7 @@ package com.example.demo.viewmodels;
 
 import com.example.demo.models.Book;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.util.Collection;
 @Builder
 public class AuthorViewModel {
     private Long id;
+    @NotEmpty(message = "Author name is required")
     private String name;
     private Collection<Book> books;
     private LocalDateTime createdOn;

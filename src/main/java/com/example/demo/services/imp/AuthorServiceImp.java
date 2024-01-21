@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorServiceImp implements AuthorService {
@@ -41,5 +42,32 @@ public class AuthorServiceImp implements AuthorService {
         Author entity = new Author();
         entity.setName(form.getName());
         return authorRepository.save(entity);
+    }
+
+    @Override
+    public Author findById(long id) {
+        Optional<Author> optional = authorRepository.findById(id);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        return optional.get();
+    }
+
+    @Override
+    public Author update(AuthorViewModel form) {
+
+        Optional<Author> optional = authorRepository.findById(form.getId());
+        if (optional.isEmpty()) {
+            return null;
+        }
+
+        Author entity = optional.get();
+        entity.setName(form.getName());
+        return authorRepository.save(entity);
+    }
+
+    @Override
+    public void delete(long id) {
+        authorRepository.deleteById(id);
     }
 }
