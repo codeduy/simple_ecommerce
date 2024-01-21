@@ -47,10 +47,10 @@ public class BookServiceImp implements BookService {
         }
 
         Book entity = optional.get();
-        entity.setName(form.getName());
-        entity.setPrice(form.getPrice());
-        entity.setAuthor(form.getAuthor());
-        entity.setImagePath(form.getImagePath());
+//        entity.setName(form.getName());
+//        entity.setPrice(form.getPrice());
+//        entity.setAuthor(form.getAuthor());
+//        entity.setImagePath(form.getImagePath());
 
         return bookRepository.save(entity);
     }

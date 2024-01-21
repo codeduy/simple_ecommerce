@@ -24,7 +24,6 @@ public class UserEntity implements UserDetails {
     private long id;
     private String userName;
     private String password;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_id",
@@ -32,6 +31,12 @@ public class UserEntity implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private List<Role> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<Comment> comments =  new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<Mark> marks =  new ArrayList<>();
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Collection<Order> orders  =  new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
