@@ -1,10 +1,16 @@
 package com.example.demo.services.imp;
 
+import com.example.demo.exceptions.AppException;
 import com.example.demo.forms.BookForm;
+import com.example.demo.models.Publisher;
+import com.example.demo.services.AuthorService;
+import com.example.demo.services.GenresService;
+import com.example.demo.services.PublisherService;
 import com.example.demo.viewmodels.BookViewModel;
 import com.example.demo.models.Book;
 import com.example.demo.repositories.BookRepository;
 import com.example.demo.services.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,12 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImp implements BookService {
     private final BookRepository bookRepository;
-    @Autowired
-    public BookServiceImp(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private final AuthorService authorService;
+    private final GenresService genresService;
+    private final PublisherService publisherService;
 
     public List<Book> listAll() {
         return bookRepository
@@ -31,12 +37,37 @@ public class BookServiceImp implements BookService {
         return bookRepository.save(entity);
     }
 
-    public Book findById(long id) {
-        var optional = bookRepository.findById(id);
-        if (optional.isEmpty()) {
-            return null;
+    @Override
+    public Book create(BookViewModel form) throws Exception {
+        var entity = new Book();
+
+        var author = authorService.findById(form.getAuthorId());
+        if (author == null) {
+            throw new AppException("Author is null");
         }
-        return optional.get();
+        form.setAuthor(author);
+
+        var genres = genresService.findById(form.getGenresId());
+        if (genres == null) {
+            throw new AppException("Genres is null");
+        }
+        form.setGenres(genres);
+
+        var publisher = publisherService.findById(form.getPublisherId());
+        if (publisher == null) {
+            throw new AppException("Publisher is null");
+        }
+        form.setPublisher(publisher);
+
+        setEntity(entity, form);
+
+        return bookRepository.save(entity);
+    }
+
+    public Book findById(long id) {
+        return bookRepository
+                .findById(id)
+                .orElse(null);
     }
 
     public Book update(BookForm form) {
@@ -65,6 +96,15 @@ public class BookServiceImp implements BookService {
                 .name(entity.getName())
                 .price(entity.getPrice())
                 .imagePath(entity.getImagePath())
+                .isActive(entity.getIsActive())
+                .author(entity.getAuthor())
+                .authorId(entity.getAuthor().getId())
+                .genres(entity.getGenres())
+                .genresId(entity.getGenres().getId())
+                .publisher(entity.getPublisher())
+                .publisherId(entity.getPublisher().getId())
+                .comments(entity.getComments())
+                .marks(entity.getMarks())
                 .createdOn(entity.getCreatedOn())
                 .updatedOn(entity.getUpdatedOn())
                 .build();
@@ -86,5 +126,14 @@ public class BookServiceImp implements BookService {
                 .price(entity.getPrice())
                 .imagePath(entity.getImagePath())
                 .build();
+    }
+
+    private void setEntity(Book entity, BookViewModel form) {
+        entity.setName(form.getName());
+        entity.setPrice(form.getPrice());
+        entity.setImagePath(form.getImagePath());
+        entity.setAuthor(form.getAuthor());
+        entity.setGenres(form.getGenres());
+        entity.setPublisher(form.getPublisher());
     }
 }

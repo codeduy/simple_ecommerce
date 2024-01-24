@@ -1,37 +1,35 @@
 package com.example.demo.controllers;
 
 import com.example.demo.forms.BookForm;
+import com.example.demo.models.Author;
 import com.example.demo.models.Book;
-import com.example.demo.services.UploadService;
+import com.example.demo.services.*;
 import com.example.demo.viewmodels.BookViewModel;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.services.BookService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/admin/books/")
 public class BookController {
+
     private final BookService bookService;
     private final UploadService uploadService;
+    private final AuthorService authorService;
+    private final GenresService genresService;
+    private final PublisherService publisherService;
 
-    @Autowired
-    public BookController(
-            BookService bookService,
-            UploadService uploadService) {
-        this.bookService = bookService;
-        this.uploadService = uploadService;
-    }
-
-    @GetMapping("")
+    @GetMapping
     public String index(Model model) {
         List<BookViewModel> list = bookService
                 .listAll()
@@ -44,16 +42,35 @@ public class BookController {
 
     @GetMapping("create")
     public String create(Model model) {
-        BookForm form = new BookForm();
+        BookViewModel form = new BookViewModel();
         model.addAttribute("form", form);
+
+        var authors = authorService.listAll()
+                .stream()
+                .map(authorService::mapToViewModel)
+                .toList();
+        model.addAttribute("authors", authors);
+
+        var genres = genresService.listAll()
+                .stream()
+                .map(genresService::mapToViewModel)
+                .toList();
+        model.addAttribute("genres", genres);
+
+        var publishers = publisherService.listAll()
+                .stream()
+                .map(publisherService::mapToViewModel)
+                .toList();
+        model.addAttribute("publishers", publishers);
+
         return "books/create";
     }
 
     @PostMapping("create")
     public String handleCreate(
-            @Valid @ModelAttribute("form") BookForm form,
+            @Valid @ModelAttribute("form") BookViewModel form,
             @PathVariable("file") MultipartFile file,
-            BindingResult result) throws IOException {
+            BindingResult result) throws Exception {
 
         if (file.isEmpty()) {
             result.rejectValue(

@@ -10,6 +10,7 @@ import java.util.List;
 public interface BookService {
     List<Book> listAll();
     Book create(BookForm form);
+    Book create(BookViewModel form) throws Exception;
     Book findById(long id);
     Book update(BookForm form);
     void delete(long productId);

@@ -6,80 +6,259 @@
 
 <div layout:fragment="content">
 
-    <div class="container py-2 d-flex justify-content-center">
-        <div class="col-12 col-sm-10 col-md-8 card p-4 mt-4">
-            <div class="row">
-                <h3 class="mb-3 text-center">Add new product</h3>
-                <div class="col-12 col-md-6">
-                    <form role="form"
-                          method="post"
-                          th:action="@{/admin/books/create}"
-                          th:object="${form}"
-                          enctype="multipart/form-data">
+    <div class="container">
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Product name</label>
-                            <input id="name" type="text" th:field="*{name}" class="form-control"/>
-                            <span th:if="${#fields.hasErrors('name')}"
-                                  th:errors="*{name}"
-                                  class="text-danger"></span>
-                        </div>
+        <div class="d-flex justify-content-start">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/admin/dashboard">Admin</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/admin/books/">Books</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Create
+                    </li>
+                </ol>
+            </nav>
+        </div>
 
-                        <div class="mb-3">
-                            <label for="author" class="form-label">Author</label>
-                            <input id="author" type="text" th:field="*{author}" class="form-control"/>
-                            <span th:if="${#fields.hasErrors('author')}"
-                                  th:errors="*{author}"
-                                  class="text-danger"></span>
-                        </div>
+        <div class="d-flex justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8">
+                <div class="row">
 
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Product price</label>
-                            <input id="price" type="number" th:field="*{price}" class="form-control"/>
-                            <span th:if="${#fields.hasErrors('price')}"
-                                  th:errors="*{price}"
-                                  class="text-danger"></span>
-                        </div>
+                    <h3 class="mb-3 text-center">
+                        Add new product
+                    </h3>
 
-                        <div class="mb-3">
-                            <label for="upload-file-input" class="form-label">  </label>
-                            <input id="upload-file-input" type="file" name="file" class="form-control"/>
+                    <div class="col-12 col-md-6">
+                        <form role="form"
+                              method="post"
+                              th:action="@{/admin/books/create}"
+                              th:object="${form}"
+                              enctype="multipart/form-data">
                             <span th:if="${#fields.hasErrors('imagePath')}"
                                   th:errors="*{imagePath}"
                                   class="text-danger"></span>
-                        </div>
+                            <!--  -->
+                            <input th:field="*{authorId}">
+                            <input th:field="*{genresId}">
+                            <input th:field="*{publisherId}">
+                            <input id="upload-file-input"
+                                   type="file"
+                                   name="file"/>
+                            <!--  -->
 
-                        <div class="d-flex justify-content-between">
-                            <a href="/admin/products/" class="btn btn-secondary">Back to list</a>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Product name</label>
+                                <input id="name" type="text" th:field="*{name}" class="form-control"/>
+                                <span th:if="${#fields.hasErrors('name')}"
+                                      th:errors="*{name}"
+                                      class="text-danger"></span>
+                            </div>
 
-                    </form>
-                </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Product price</label>
+                                <input id="price" type="number" th:field="*{price}" class="form-control"/>
+                                <span th:if="${#fields.hasErrors('price')}"
+                                      th:errors="*{price}"
+                                      class="text-danger"></span>
+                            </div>
 
-                <div class="col-12 col-md-6 d-flex align-items-center p-4">
-                    <div class="btn rounded w-100 h-100 bg-secondary
+                            <div class="mb-3">
+                                <button class="btn btn-outline-primary"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#authorModal">
+                                    Choose an author
+                                </button>
+                            </div>
+
+                            <div class="mb-3">
+                                <button class="btn btn-outline-primary"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#publisherModal">
+                                    Choose an publisher
+                                </button>
+                            </div>
+
+                            <div class="mb-3">
+                                <button class="btn btn-outline-primary"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#genresModal">
+                                    Choose an genres
+                                </button>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="/admin/products/" class="btn btn-secondary">Back to list</a>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="col-12 col-md-6 d-flex align-items-center p-4">
+                        <div class="btn rounded w-100 h-100 bg-secondary
                                 bg-body-tertiary d-flex justify-content-center
                                  align-items-center"
-                        id="upload-file-zone">
+                             id="upload-file-zone">
 
-                        <img class="img-fluid d-none" src="" alt="upload image"
-                                id="image-preview">
-                        <div class="h1 text-muted text-center"
-                             id="upload-file-guide">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <h4>Choose image to upload</h4>
+                            <img class="img-fluid d-none" src="" alt="upload image"
+                                 id="image-preview">
+                            <div class="h1 text-muted text-center"
+                                 id="upload-file-guide">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <h4>Choose image to upload</h4>
+                            </div>
+
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
+
+    <!-- choose author modal -->
+    <div class="modal fade" id="authorModal" tabindex="-1" aria-labelledby="authorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="authorModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li th:each="item : ${authors}" class="list-group-item">
+                            <div class="d-flex justify-content-between">
+
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="author-id-radio"
+                                           th:id="${'id_67' + item.id}"
+                                           th:attr="data-author-id=${item.id}">
+                                    <label class="form-check-label"
+                                           th:for="${'id_67' + item.id}"
+                                           th:text="${item.name}"></label>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- choose genres modal -->
+    <div class="modal fade" id="genresModal" tabindex="-1" aria-labelledby="genresModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="genresModalLabel">Choose a genres</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li th:each="item : ${genres}" class="list-group-item">
+                            <div class="d-flex justify-content-between">
+
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="author-id-radio"
+                                           th:id="${'id_67' + item.id}"
+                                           th:attr="data-genres-id=${item.id}">
+                                    <label class="form-check-label"
+                                           th:for="${'id_67' + item.id}"
+                                           th:text="${item.name}"></label>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- choose publisher modal -->
+    <div class="modal fade" id="publisherModal" tabindex="-1" aria-labelledby="publisherModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="publisherModalLabel">Choose a publisher</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li th:each="item : ${publishers}" class="list-group-item">
+                            <div class="d-flex justify-content-between">
+
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="author-id-radio"
+                                           th:id="${'id_67' + item.id}"
+                                           th:attr="data-publisher-id=${item.id}">
+                                    <label class="form-check-label"
+                                           th:for="${'id_67' + item.id}"
+                                           th:text="${item.name}"></label>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 <!-- add js for this file -->
 <th:block layout:fragment="_script">
     <script src="/static/js/previewImage.js"></script>
+    <script>
+        $("[data-author-id]").click(function () {
+            let id = $(this).data('author-id');
+            $("#authorId").val(id);
+            console.log('Data-id:', id);
+        })
+
+        $("[data-genres-id]").click(function () {
+            let id = $(this).data('genres-id');
+            $("#genresId").val(id);
+            console.log('Data-id:', id);
+        })
+
+        $("[data-publisher-id]").click(function () {
+            let id = $(this).data('publisher-id');
+            $("#publisherId").val(id);
+            console.log('Data-id:', id);
+        })
+
+    </script>
 </th:block>
 
 </html>

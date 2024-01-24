@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
@@ -35,9 +36,9 @@ public class Book {
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private Collection<Comment> comments;
+    private Collection<Comment> comments = new ArrayList<>();
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private Collection<Mark> marks;
+    private Collection<Mark> marks = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
