@@ -110,6 +110,17 @@ public class BookServiceImp implements BookService {
                 .build();
     }
 
+    @Override
+    public Book save(BookViewModel form) {
+        var isCreateAction = form.getId() == null;
+        var entity = new Book();
+        if (!isCreateAction) {
+            entity = bookRepository.findById(form.getId()).orElseThrow();
+        }
+        setEntity(entity, form);
+        return bookRepository.save(entity);
+    }
+
     private Book mapToEntity(BookForm form) {
         return Book.builder()
                 .id(form.getId())

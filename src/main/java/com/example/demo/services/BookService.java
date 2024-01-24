@@ -16,5 +16,6 @@ public interface BookService {
     void delete(long productId);
     BookForm mapToForm(Book entity);
     BookViewModel mapToViewModel(Book entity);
+    Book save(BookViewModel form);
 
 }

@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/admin/books/")
 public class BookController {
+    private final String ADD_ACTION_TEMPLATE = "books/create";
+    private static final String CREATE_TITLE = "Create new books to sell";
+    private static final String UPDATE_TITLE = "Update your book info";
+
 
     private final BookService bookService;
     private final UploadService uploadService;
@@ -42,6 +46,9 @@ public class BookController {
 
     @GetMapping("create")
     public String create(Model model) {
+        // set data for view
+        model.addAttribute("TITLE", CREATE_TITLE);
+
         BookViewModel form = new BookViewModel();
         model.addAttribute("form", form);
 
@@ -63,31 +70,92 @@ public class BookController {
                 .toList();
         model.addAttribute("publishers", publishers);
 
-        return "books/create";
+        return ADD_ACTION_TEMPLATE;
     }
 
-    @PostMapping("create")
+    @PostMapping("save")
     public String handleCreate(
             @Valid @ModelAttribute("form") BookViewModel form,
             @PathVariable("file") MultipartFile file,
-            BindingResult result) throws Exception {
+            BindingResult result,
+            Model model) throws Exception {
 
-        if (file.isEmpty()) {
+        var isCreateAction = form.getId() == null;
+        setMessageForDetailView(model, isCreateAction);
+
+        // validate for add action
+        if (isCreateAction && file.isEmpty()) {
             result.rejectValue(
                     "imagePath",
                     "Image missing",
                     "Please choose an image");
+            return ADD_ACTION_TEMPLATE;
         }
+        // validate for add and update
+        if (form.getAuthorId() == null) {
+            result.rejectValue(
+                    "authorId",
+                    "authorId missing",
+                    "Please choose an author");
+            return ADD_ACTION_TEMPLATE;
+        }
+
+        form.setAuthor(authorService.findById(form.getAuthorId()));
+        if (form.getAuthor() == null) {
+            result.rejectValue(
+                    "authorId",
+                    "authorId missing",
+                    "Author doesn't exist");
+            return ADD_ACTION_TEMPLATE;
+        }
+
+        if (form.getGenresId() == null) {
+            result.rejectValue(
+                    "genresId",
+                    "genresId missing",
+                    "Please choose an genres");
+        }
+
+        form.setGenres( genresService.findById(form.getGenresId()));
+        if (form.getGenres() == null) {
+            result.rejectValue(
+                    "genresId",
+                    "genresId missing",
+                    "Genres doesn't exist");
+            return ADD_ACTION_TEMPLATE;
+        }
+
+        if (form.getPublisherId() == null) {
+            result.rejectValue(
+                    "publisherId",
+                    "publisherId missing",
+                    "Please choose an publisher");
+        }
+
+        form.setPublisher(publisherService.findById(form.getPublisherId()));
+        if (form.getPublisher() == null) {
+            result.rejectValue(
+                    "publisherId",
+                    "publisherId missing",
+                    "Publisher doesn't exist");
+            return ADD_ACTION_TEMPLATE;
+        }
+
         // return and show error
         if (result.hasErrors()) {
-            return "/books/create";
+            return ADD_ACTION_TEMPLATE;
         }
-        // save file and get file name
-        String fileName = uploadService.save(file, "books");
-        // update path to form object
-        form.setImagePath(fileName);
+
+        if (!file.isEmpty()) {
+            // save file and get file name
+            String fileName = uploadService.save(file, "books");
+            // update path to form object
+            form.setImagePath(fileName);
+        }
+
         // save to db
-        bookService.create(form);
+        bookService.save(form);
+
         return "redirect:/admin/books/";
     }
 
@@ -96,9 +164,10 @@ public class BookController {
             @PathVariable("id") long id,
             Model model) {
         Book entity = bookService.findById(id);
-        BookForm form = bookService.mapToForm(entity);
+        BookViewModel form = bookService.mapToViewModel(entity);
         model.addAttribute("form", form);
-        return "books/update";
+        setMessageForDetailView(model, false);
+        return ADD_ACTION_TEMPLATE;
     }
 
     @PostMapping("update/{id}")
@@ -135,6 +204,14 @@ public class BookController {
             @PathVariable("id") long id) {
         bookService.delete(id);
         return "redirect:/admin/books/";
+    }
+
+    private void setMessageForDetailView(Model model, boolean isCreateAction) {
+        if (isCreateAction) {
+            model.addAttribute("TITLE", CREATE_TITLE);
+        } else {
+            model.addAttribute("TITLE", UPDATE_TITLE);
+        }
     }
 }
 

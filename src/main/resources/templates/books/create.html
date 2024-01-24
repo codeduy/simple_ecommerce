@@ -28,20 +28,19 @@
             <div class="col-12 col-sm-10 col-md-8">
                 <div class="row">
 
-                    <h3 class="mb-3 text-center">
-                        Add new product
-                    </h3>
+                    <h3 class="mb-3 text-center" th:text="${TITLE}"></h3>
 
                     <div class="col-12 col-md-6">
                         <form role="form"
                               method="post"
-                              th:action="@{/admin/books/create}"
+                              th:action="@{/admin/books/save}"
                               th:object="${form}"
                               enctype="multipart/form-data">
                             <span th:if="${#fields.hasErrors('imagePath')}"
                                   th:errors="*{imagePath}"
                                   class="text-danger"></span>
                             <!--  -->
+                            <input th:field="*{id}">
                             <input th:field="*{authorId}">
                             <input th:field="*{genresId}">
                             <input th:field="*{publisherId}">
