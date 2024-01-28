@@ -106,9 +106,12 @@
                                  align-items-center"
                              id="upload-file-zone">
 
-                            <img class="img-fluid d-none" src="" alt="upload image"
+                            <img class="img-fluid" src="" alt="upload image"
+                                 th:classappend="${form.imagePath}? '' : 'd-none'"
+                                 th:src="@{'/uploads/books/' + ${form.imagePath}}"
                                  id="image-preview">
                             <div class="h1 text-muted text-center"
+                                 th:classappend="${form.imagePath}? 'd-none' : ''"
                                  id="upload-file-guide">
                                 <i class="fa-solid fa-cloud-arrow-up"></i>
                                 <h4>Choose image to upload</h4>
