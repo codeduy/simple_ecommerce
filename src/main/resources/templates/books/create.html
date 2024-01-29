@@ -40,11 +40,12 @@
                                   th:errors="*{imagePath}"
                                   class="text-danger"></span>
                             <!--  -->
-                            <input th:field="*{id}">
-                            <input th:field="*{authorId}">
-                            <input th:field="*{genresId}">
-                            <input th:field="*{publisherId}">
+                            <input type="hidden" th:field="*{id}">
+                            <input type="hidden" th:field="*{authorId}">
+                            <input type="hidden" th:field="*{genresId}">
+                            <input type="hidden" th:field="*{publisherId}">
                             <input id="upload-file-input"
+                                   hidden
                                    type="file"
                                    name="file"/>
                             <!--  -->

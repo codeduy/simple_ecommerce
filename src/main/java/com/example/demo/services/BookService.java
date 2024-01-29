@@ -8,11 +8,12 @@ import com.example.demo.viewmodels.BookViewModel;
 import java.util.List;
 
 
-public interface BookService {
-    List<Book> listAll();
-    Book findById(long id);
-    void delete(long productId);
-    BookViewModel mapToViewModel(Book entity);
-    Book save(BookViewModel form) throws AppValidationException;
+public interface BookService
+        extends GenericService<Book, BookViewModel> {
+//    List<Book> listAll();
+//    Book findById(long id);
+//    void delete(long productId);
+//    BookViewModel mapToViewModel(Book entity);
+//    Book save(BookViewModel form) throws AppValidationException;
 
 }

@@ -19,7 +19,10 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/admin/books/")
 public class BookController {
-    private final String ACTION_TEMPLATE = "books/create";
+    private static final String ACTION_TEMPLATE = "books/create";
+    private static final String INDEX_TEMPLATE = "books/index";
+    private static final String INDEX_URL = "/admin/books/";
+
     private static final String CREATE_TITLE = "Create new books to sell";
     private static final String UPDATE_TITLE = "Update your book info";
 
@@ -35,10 +38,9 @@ public class BookController {
         List<BookViewModel> list = bookService
                 .listAll()
                 .stream().map(bookService::mapToViewModel)
-                .collect(Collectors.toList());
-
+                .toList();
         model.addAttribute("list", list);
-        return "books/index";
+        return INDEX_TEMPLATE;
     }
 
     @GetMapping("create")
@@ -82,7 +84,8 @@ public class BookController {
         }
 
         // validate for add action
-        if (isCreateAction && file.isEmpty()) {
+        boolean isImageMissing = isCreateAction && file.isEmpty();
+        if (isImageMissing) {
             result.rejectValue(
                     "imagePath",
                     "Image missing",
@@ -91,26 +94,27 @@ public class BookController {
         }
 
         try {
-            if (!file.isEmpty()) {
+            boolean hasImageToUpload = !file.isEmpty();
+            if (hasImageToUpload) {
                 String fileName = uploadService.save(file, "books");
                 form.setImagePath(fileName);
             }
             bookService.save(form);
-        } catch ( AppValidationException exception) {
+            return "redirect:" + INDEX_URL;
+        } catch (AppValidationException exception) {
             result.rejectValue(
                     exception.getField(),
                     exception.getErrorCode(),
                     exception.getMessage());
             return ACTION_TEMPLATE;
         }
-
-        return "redirect:/admin/books/";
     }
+
     @GetMapping("delete/{id}")
     public String handleDelete(
             @PathVariable("id") long id) {
         bookService.delete(id);
-        return "redirect:/admin/books/";
+        return "redirect:" + INDEX_URL;
     }
 
     private void setMessageForDetailView(Model model, boolean isCreateAction) {
