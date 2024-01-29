@@ -8,9 +8,11 @@
     <div class="container">
         <form role="form"
               method="post"
-              th:action="@{/admin/genres/create}"
+              th:action="@{/admin/genres/save}"
               th:object="${form}">
 
+            <input type="hidden" th:field="*{id}"/>
+            
             <div class="mb-3">
                 <label for="name" class="form-label">Genres name</label>
                 <input id="name" type="text" th:field="*{name}" class="form-control"/>

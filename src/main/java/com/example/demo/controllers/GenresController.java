@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.Author;
+import com.example.demo.exceptions.AppValidationException;
 import com.example.demo.services.GenresService;
-import com.example.demo.viewmodels.AuthorViewModel;
 import com.example.demo.viewmodels.GenresViewModel;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin/genres/")
 public class GenresController {
+    private static final String INDEX_TEMPLATE = "genres/index";
+    private static final String ACTION_TEMPLATE = "genres/create";
+    private static final String INDEX_URL = "/admin/genres/";
 
     private final GenresService genresService;
+
     @Autowired
     public GenresController(GenresService genresService) {
         this.genresService = genresService;
@@ -29,30 +31,30 @@ public class GenresController {
         List<GenresViewModel> list = genresService
                 .listAll()
                 .stream().map(genresService::mapToViewModel)
-                .collect(Collectors.toList());
+                .toList();
 
         model.addAttribute("list", list);
-        return "genres/index";
+        return INDEX_TEMPLATE;
     }
 
     @GetMapping("create")
     public String createPage(Model model) {
         GenresViewModel form = new GenresViewModel();
         model.addAttribute("form", form);
-        return "genres/create";
+        return ACTION_TEMPLATE;
     }
 
-    @PostMapping("create")
-    public String handleCreate(
+    @PostMapping("save")
+    public String save(
             @Valid @ModelAttribute("form") GenresViewModel form,
-            BindingResult result) {
+            BindingResult result) throws AppValidationException {
 
         if (result.hasErrors()) {
-            return "genres/create";
+            return ACTION_TEMPLATE;
         }
 
-        genresService.create(form);
-        return "redirect:/admin/genres/";
+        genresService.save(form);
+        return "redirect:" + INDEX_URL;
     }
 
     @GetMapping("update/{id}")
@@ -62,35 +64,13 @@ public class GenresController {
         var entity = genresService.findById(id);
         var form = genresService.mapToViewModel(entity);
         model.addAttribute("form", form);
-        return "genres/update";
-    }
-
-    @PostMapping("update/{id}")
-    public String handleUpdate(
-            @PathVariable("id") long id,
-            @Valid @ModelAttribute("form") GenresViewModel form,
-            BindingResult result) {
-
-        if (!form.getId().equals(id)) {
-            result.rejectValue(
-                    "id",
-                    "id error",
-                    "Id doesn't match");
-        }
-
-        if (result.hasErrors()) {
-            return "genres/update";
-        }
-
-        genresService.update(form);
-
-        return "redirect:/admin/genres/";
+        return ACTION_TEMPLATE;
     }
 
     @GetMapping("delete/{id}")
     public String handleDelete(
             @PathVariable("id") long id) {
         genresService.delete(id);
-        return "redirect:/admin/genres/";
+        return "redirect:" + INDEX_URL;
     }
 }

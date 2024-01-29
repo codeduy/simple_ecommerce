@@ -7,11 +7,7 @@ import com.example.demo.viewmodels.GenresViewModel;
 
 import java.util.List;
 
-public interface GenresService {
-    List<Genres> listAll();
-    Genres create(GenresViewModel form);
-    Genres findById(long id);
-    Genres update(GenresViewModel form);
-    void delete(long id);
-    GenresViewModel mapToViewModel(Genres entity);
+public interface GenresService
+        extends GenericService<Genres, GenresViewModel> {
+
 }
