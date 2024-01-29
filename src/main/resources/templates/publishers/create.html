@@ -8,8 +8,10 @@
     <div class="container">
         <form role="form"
               method="post"
-              th:action="@{/admin/publishers/create}"
+              th:action="@{/admin/publishers/save}"
               th:object="${form}">
+            <!-- hidden field-->
+            <input type="hidden" th:field="*{id}" />
 
             <div class="mb-3">
                 <label for="name" class="form-label">Publisher name</label>

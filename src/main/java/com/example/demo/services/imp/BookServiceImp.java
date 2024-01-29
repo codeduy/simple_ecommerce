@@ -113,6 +113,9 @@ public class BookServiceImp implements BookService {
     private void setEntity(Book entity, BookViewModel form) {
         entity.setName(form.getName());
         entity.setPrice(form.getPrice());
-        entity.setImagePath(form.getImagePath());
+        if (form.getImagePath() != null &&
+            !form.getImagePath().isEmpty()) {
+            entity.setImagePath(form.getImagePath());
+        }
     }
 }

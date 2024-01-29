@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.exceptions.AppValidationException;
 import com.example.demo.services.PublisherService;
 import com.example.demo.viewmodels.BookViewModel;
 import com.example.demo.viewmodels.GenresViewModel;
@@ -17,6 +18,9 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/admin/publishers/")
 public class PublisherController {
+    public static final String INDEX_URL = "/admin/publishers/";
+    private static final String ACTION_TEMPLATE = "publishers/create";
+    private static final String INDEX_TEMPLATE = "publishers/index";
     private final PublisherService publisherService;
     @Autowired
     public PublisherController(PublisherService publisherService) {
@@ -28,10 +32,10 @@ public class PublisherController {
         var list = publisherService
                 .listAll()
                 .stream().map(publisherService::mapToViewModel)
-                .collect(Collectors.toList());
+                .toList();
 
         model.addAttribute("list", list);
-        return "publishers/index";
+        return INDEX_TEMPLATE;
     }
 
 
@@ -39,20 +43,7 @@ public class PublisherController {
     public String createPage(Model model) {
         var form = new PublisherViewModel();
         model.addAttribute("form", form);
-        return "publishers/create";
-    }
-
-    @PostMapping("create")
-    public String handleCreate(
-            @Valid @ModelAttribute("form") PublisherViewModel form,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "publishers/create";
-        }
-
-        publisherService.create(form);
-        return "redirect:/admin/publishers/";
+        return ACTION_TEMPLATE;
     }
 
     @GetMapping("update/{id}")
@@ -62,36 +53,26 @@ public class PublisherController {
         var entity = publisherService.findById(id);
         var form = publisherService.mapToViewModel(entity);
         model.addAttribute("form", form);
-        return "publishers/update";
+        return ACTION_TEMPLATE;
     }
 
-    @PostMapping("update/{id}")
-    public String handleUpdate(
-            @PathVariable("id") long id,
+    @PostMapping("save")
+    public String handleCreate(
             @Valid @ModelAttribute("form") PublisherViewModel form,
-            BindingResult result) {
-
-        if (!form.getId().equals(id)) {
-            result.rejectValue(
-                    "id",
-                    "id error",
-                    "Id doesn't match");
-        }
+            BindingResult result) throws AppValidationException {
 
         if (result.hasErrors()) {
-            return "publishers/update";
+            return ACTION_TEMPLATE;
         }
 
-        publisherService.update(form);
-
-        return "redirect:/admin/publishers/";
+        publisherService.save(form);
+        return "redirect:"+INDEX_URL;
     }
-
 
     @GetMapping("delete/{id}")
     public String handleDelete(
             @PathVariable("id") long id) {
         publisherService.delete(id);
-        return "redirect:/admin/publishers/";
+        return "redirect:"+INDEX_URL;
     }
 }

@@ -1,21 +1,18 @@
 package com.example.demo.viewmodels;
 
 import com.example.demo.models.Book;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class PublisherViewModel {
-    private Long id;
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+public class PublisherViewModel extends BaseViewModel {
     private String name;
     private Collection<Book> books;
-    private LocalDateTime createdOn;
-    private LocalDateTime updatedOn;
 }

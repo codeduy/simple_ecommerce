@@ -7,11 +7,7 @@ import com.example.demo.viewmodels.PublisherViewModel;
 
 import java.util.List;
 
-public interface PublisherService {
-    List<Publisher> listAll();
-    Publisher create(PublisherViewModel form);
-    Publisher findById(long id);
-    Publisher update(PublisherViewModel form);
-    void delete(long id);
-    PublisherViewModel mapToViewModel(Publisher entity);
+public interface PublisherService
+        extends GenericService<Publisher, PublisherViewModel> {
+
 }
