@@ -12,18 +12,26 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuthorServiceImp implements AuthorService {
+public class AuthorServiceImp
+        extends GenericServiceImp<Author, AuthorViewModel>
+        implements AuthorService {
 
-    private final AuthorRepository authorRepository;
     @Autowired
     public AuthorServiceImp(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
+        super(authorRepository);
     }
 
     @Override
-    public List<Author> listAll() {
-        return authorRepository
-                .findAll(Sort.by(Sort.Direction.DESC, "updatedOn"));
+    protected Author newEntity() {
+        return new Author();
+    }
+
+    @Override
+    protected void loadFormIntoEntity(
+            Author entity,
+            AuthorViewModel form) {
+        entity.setName(form.getName());
+
     }
 
     @Override
@@ -37,37 +45,4 @@ public class AuthorServiceImp implements AuthorService {
                 .build();
     }
 
-    @Override
-    public Author create(AuthorViewModel form) {
-        Author entity = new Author();
-        entity.setName(form.getName());
-        return authorRepository.save(entity);
-    }
-
-    @Override
-    public Author findById(long id) {
-        Optional<Author> optional = authorRepository.findById(id);
-        if (optional.isEmpty()) {
-            return null;
-        }
-        return optional.get();
-    }
-
-    @Override
-    public Author update(AuthorViewModel form) {
-
-        Optional<Author> optional = authorRepository.findById(form.getId());
-        if (optional.isEmpty()) {
-            return null;
-        }
-
-        Author entity = optional.get();
-        entity.setName(form.getName());
-        return authorRepository.save(entity);
-    }
-
-    @Override
-    public void delete(long id) {
-        authorRepository.deleteById(id);
-    }
 }

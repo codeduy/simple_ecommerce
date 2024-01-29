@@ -8,9 +8,11 @@
     <div class="container">
         <form role="form"
               method="post"
-              th:action="@{/admin/authors/create}"
+              th:action="@{/admin/authors/save}"
               th:object="${form}"
               enctype="multipart/form-data">
+
+            <input type="hidden" th:field="*{id}">
 
             <div class="mb-3">
                 <label for="name" class="form-label">Author name</label>
