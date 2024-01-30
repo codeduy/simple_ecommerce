@@ -4,6 +4,7 @@ import com.example.demo.exceptions.AppValidationException;
 import com.example.demo.models.BaseEntity;
 import com.example.demo.services.GenericService;
 import com.example.demo.viewmodels.BaseViewModel;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public abstract class GenericServiceImp<Entity extends BaseEntity, ViewModel ext
 
     @Override
     public List<Entity> listAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "updatedOn"));
     }
 
     @Override

@@ -8,6 +8,7 @@
     <div class="container">
         <form role="form"
               method="post"
+              enctype="multipart/form-data"
               th:action="@{/admin/publishers/save}"
               th:object="${form}">
             <!-- hidden field-->
@@ -18,6 +19,24 @@
                 <input id="name" type="text" th:field="*{name}" class="form-control"/>
                 <span th:if="${#fields.hasErrors('name')}"
                       th:errors="*{name}"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Avatar</label>
+                <input class="form-control" type="file" id="formFile" name="file">
+                <span th:if="${#fields.hasErrors('imagePath')}"
+                      th:errors="*{imagePath}"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">
+                    Description <small>(optional)</small>
+                </label>
+                <textarea th:field="*{description}" class="form-control" id="description" rows="3"></textarea>
+                <span th:if="${#fields.hasErrors('description')}"
+                      th:errors="*{description}"
                       class="text-danger"></span>
             </div>
 

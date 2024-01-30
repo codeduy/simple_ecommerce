@@ -18,6 +18,8 @@ import java.util.Collection;
 @AllArgsConstructor
 @SuperBuilder
 public class BookViewModel extends BaseViewModel {
+    @NotNull
+    @NotEmpty
     private String name;
     private Double price;
     private String imagePath;

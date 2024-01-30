@@ -76,12 +76,32 @@
                             </div>
 
                             <div class="mb-3">
-                                <button class="btn btn-outline-primary"
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#publisherModal">
-                                    Choose an publisher
-                                </button>
+                                <h6 class="form-label">Publisher:</h6>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-end gap-2">
+                                        <th:block th:if="${form.publisher}">
+                                            <img src="https://yt3.ggpht.com/yti/AGOGRCoWQsnQUgAuR7Rh4yQgdD1TpjjjIfkG8WaHaA=s88-c-k-c0x00ffffff-no-rj"
+                                                 alt="publisher image"
+                                                 style="width: 40px; height: 40px;"
+                                                 class="rounded float-start"/>
+                                            <span th:text="${form.publisher.name}" class="h6"></span>
+                                        </th:block>
+                                        <th:block th:unless="${form.publisher}">
+                                            <span>Unselected :(</span>
+                                        </th:block>
+                                    </div>
+
+                                    <div data-bs-toggle="tooltip"
+                                         data-bs-title="Choose other publisher.">
+                                        <button class="btn btn-outline-primary"
+                                                type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#publisherModal">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
                             </div>
 
                             <div class="mb-3">

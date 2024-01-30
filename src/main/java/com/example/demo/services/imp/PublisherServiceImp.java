@@ -28,6 +28,12 @@ public class PublisherServiceImp
             PublisherViewModel form) {
         entity.setId(form.getId());
         entity.setName(form.getName());
+        entity.setDescription(form.getDescription());
+
+        final boolean isImagePathHaveChange = form.getImagePath() != null && !form.getImagePath().isEmpty();
+        if (isImagePathHaveChange) {
+            entity.setImagePath(form.getImagePath());
+        }
     }
 
     @Override
@@ -35,6 +41,8 @@ public class PublisherServiceImp
         return PublisherViewModel.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .description(entity.getDescription())
+                .imagePath(entity.getImagePath())
                 .books(entity.getBooks())
                 .createdOn(entity.getCreatedOn())
                 .updatedOn(entity.getUpdatedOn())

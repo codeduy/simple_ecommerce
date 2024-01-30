@@ -16,23 +16,31 @@
             </nav>
         </div>
 
-        <div class="text-end">
+        <div class="text-end mb-3">
             <a href="/admin/publishers/create" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
                 Add new publishers
             </a>
         </div>
 
-        <ul>
+        <ul style="list-style: none">
             <li th:each="item : ${list}">
-                <span th:text="${item.name}"></span>
-                <a th:href="@{/admin/publishers/update/{id}(id=${item.id})}"
-                   class="btn btn-warning">
-                    Details
-                </a>
-                <a th:href="@{/admin/publishers/delete/{id}(id=${item.id})}"
-                   class="btn btn-danger">
-                    Delete
-                </a>
+                <div class="card mb-3 p-2">
+                    <div class="d-flex gap-2 align-items-end justify-content-between ">
+
+                        <div class="d-flex gap-2 align-items-end">
+                            <img th:src="@{'/uploads/publishers/' + ${item.imagePath}}"
+                                 alt="Image" style="width: 40px; height: 40px;"/>
+                            <h6 th:text="${item.name}"></h6>
+                        </div>
+
+                        <a th:href="@{/admin/publishers/update/{id}(id=${item.id})}"
+                           class="btn btn-warning">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
