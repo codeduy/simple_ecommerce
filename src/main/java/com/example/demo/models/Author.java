@@ -17,6 +17,8 @@ import java.util.Collection;
 @Table(name = "authors")
 public class Author extends BaseEntity {
     private String name;
+    private String description;
+    private String imagePath;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private Collection<Book> books;
 }

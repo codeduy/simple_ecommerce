@@ -24,7 +24,11 @@
 
         <ul>
             <li th:each="item : ${list}">
+
                 <span th:text="${item.name}"></span>
+                <span th:text="${item.description}"></span>
+                <span th:text="${item.imagePath}"></span>
+
                 <a th:href="@{/admin/authors/update/{id}(id=${item.id})}"
                     class="btn btn-warning">
                     Details

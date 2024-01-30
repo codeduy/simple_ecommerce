@@ -1,24 +1,15 @@
 package com.example.demo.services.imp;
 
-import com.example.demo.exceptions.AppException;
 import com.example.demo.exceptions.AppValidationException;
-import com.example.demo.forms.BookForm;
-import com.example.demo.models.Publisher;
+import com.example.demo.models.Book;
+import com.example.demo.repositories.BookRepository;
 import com.example.demo.services.AuthorService;
+import com.example.demo.services.BookService;
 import com.example.demo.services.GenresService;
 import com.example.demo.services.PublisherService;
 import com.example.demo.viewmodels.BookViewModel;
-import com.example.demo.models.Book;
-import com.example.demo.repositories.BookRepository;
-import com.example.demo.services.BookService;
-import jakarta.validation.ValidationException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookServiceImp

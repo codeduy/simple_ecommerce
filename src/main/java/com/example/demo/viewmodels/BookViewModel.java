@@ -1,15 +1,13 @@
 package com.example.demo.viewmodels;
 
 import com.example.demo.models.*;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 @EqualsAndHashCode(callSuper = true)
@@ -18,8 +16,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @SuperBuilder
 public class BookViewModel extends BaseViewModel {
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Book name is required")
     private String name;
     private Double price;
     private String imagePath;

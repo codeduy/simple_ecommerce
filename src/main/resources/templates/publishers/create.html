@@ -45,6 +45,9 @@
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>
+
+        <img th:src="@{'/uploads/publishers/' + ${form.imagePath}}"
+             alt="Image" style="width: 400px;"/>
     </div>
 </div>
 </html>
