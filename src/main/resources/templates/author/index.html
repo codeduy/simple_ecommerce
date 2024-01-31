@@ -16,29 +16,54 @@
             </nav>
         </div>
 
-        <div class="text-end">
+        <div class="text-end mb-3">
             <a href="/admin/authors/create" class="btn btn-success">
                 Add new author
             </a>
         </div>
 
-        <ul>
+        <ul style="list-style: none">
             <li th:each="item : ${list}">
+                <div class="card mb-3 p-2">
+                    <div class="d-flex gap-2 align-items-end justify-content-between">
 
-                <span th:text="${item.name}"></span>
-                <span th:text="${item.description}"></span>
-                <span th:text="${item.imagePath}"></span>
+                        <div class="d-flex gap-2 align-items-end">
+                            <img th:src="@{'/uploads/authors/' + ${item.imagePath}}"
+                                 alt="Image" style="width: 40px; height: 40px;"/>
+                            <h6 th:text="${item.name}"></h6>
+                        </div>
 
-                <a th:href="@{/admin/authors/update/{id}(id=${item.id})}"
-                    class="btn btn-warning">
-                    Details
-                </a>
-                <a th:href="@{/admin/authors/delete/{id}(id=${item.id})}"
-                   class="btn btn-danger">
-                    Delete
-                </a>
+                        <a th:href="@{/admin/authors/update/{id}(id=${item.id})}"
+                           class="btn btn-warning">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+
+                    </div>
+                </div>
             </li>
         </ul>
+
+<!--        <ul style="list-style: none;">-->
+<!--            <li th:each="item : ${list}">-->
+<!--                <div class="card p-2">-->
+<!--                    <span th:text="${item.name}"></span>-->
+<!--                    <span th:text="${item.description}"></span>-->
+<!--                    <span th:text="${item.imagePath}"></span>-->
+<!--                    <img th:src="@{'/uploads/authors/' + ${item.imagePath}}"-->
+<!--                         alt="Image" style="width: 40px; height: 40px;"/>-->
+
+<!--                    <a th:href="@{/admin/authors/update/{id}(id=${item.id})}"-->
+<!--                       class="btn btn-warning">-->
+<!--                        Details-->
+<!--                    </a>-->
+<!--                    <a th:href="@{/admin/authors/delete/{id}(id=${item.id})}"-->
+<!--                       class="btn btn-danger">-->
+<!--                        Delete-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </ul>-->
+
     </div>
 </div>
 </html>
