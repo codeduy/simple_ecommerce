@@ -18,8 +18,8 @@ public class PublisherViewModel
         extends BaseViewModel {
     @NotEmpty(message = "required")
     private String name;
-    private String imagePath;
     @Size(max = 200, message = "Description must be at most 200 characters")
     private String description;
+    private String imagePath;
     private Collection<Book> books;
 }

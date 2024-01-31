@@ -11,28 +11,42 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/admin/dashboard">Admin</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Authors</li>
+                    <li class="breadcrumb-item active" aria-current="page">Genres</li>
                 </ol>
             </nav>
         </div>
 
-        <div class="text-end">
+        <div class="text-end mb-3">
             <a href="/admin/genres/create" class="btn btn-success">
-                Add new author
+                <i class="fa-solid fa-plus"></i>
+                Add new genres
             </a>
         </div>
 
-        <ul>
+        <ul style="list-style: none;">
             <li th:each="item : ${list}">
-                <span th:text="${item.name}"></span>
-                <a th:href="@{/admin/genres/update/{id}(id=${item.id})}"
-                   class="btn btn-warning">
-                    Details
-                </a>
-                <a th:href="@{/admin/genres/delete/{id}(id=${item.id})}"
-                   class="btn btn-danger">
-                    Delete
-                </a>
+                <div class="card p-2 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex gap-2 align-items-center">
+                            <!-- icon -->
+                            <label class="btn" th:classappend="${item.iconClass}?'':'btn-outline-danger'">
+                                <i th:if="${item.iconClass}" th:class="${item.iconClass}"></i>
+                                <i th:unless="${item.iconClass}" class="fa-solid fa-x"></i>
+                            </label>
+                            <h6 th:text="${item.name}"></h6>
+                        </div>
+                        <a th:href="@{/admin/genres/update/{id}(id=${item.id})}"
+                           class="btn btn-warning">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </div>
+
+
+<!--                    <a th:href="@{/admin/genres/delete/{id}(id=${item.id})}"-->
+<!--                       class="btn btn-danger">-->
+<!--                        Delete-->
+<!--                    </a>-->
+                </div>
             </li>
         </ul>
     </div>

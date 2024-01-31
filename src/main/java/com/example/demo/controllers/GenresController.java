@@ -4,6 +4,7 @@ import com.example.demo.exceptions.AppValidationException;
 import com.example.demo.services.GenresService;
 import com.example.demo.viewmodels.GenresViewModel;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/admin/genres/")
 public class GenresController {
     private static final String INDEX_TEMPLATE = "genres/index";
@@ -20,11 +22,6 @@ public class GenresController {
     private static final String INDEX_URL = "/admin/genres/";
 
     private final GenresService genresService;
-
-    @Autowired
-    public GenresController(GenresService genresService) {
-        this.genresService = genresService;
-    }
 
     @GetMapping
     public String index(Model model) {
@@ -44,19 +41,6 @@ public class GenresController {
         return ACTION_TEMPLATE;
     }
 
-    @PostMapping("save")
-    public String save(
-            @Valid @ModelAttribute("form") GenresViewModel form,
-            BindingResult result) throws AppValidationException {
-
-        if (result.hasErrors()) {
-            return ACTION_TEMPLATE;
-        }
-
-        genresService.save(form);
-        return "redirect:" + INDEX_URL;
-    }
-
     @GetMapping("update/{id}")
     public String updatePage(
             @PathVariable("id") long id,
@@ -65,6 +49,20 @@ public class GenresController {
         var form = genresService.mapToViewModel(entity);
         model.addAttribute("form", form);
         return ACTION_TEMPLATE;
+    }
+
+    @PostMapping("save")
+    public String save(
+            @Valid @ModelAttribute("form") GenresViewModel form,
+            BindingResult result)
+            throws AppValidationException {
+
+        if (result.hasErrors()) {
+            return ACTION_TEMPLATE;
+        }
+
+        genresService.save(form);
+        return "redirect:" + INDEX_URL;
     }
 
     @GetMapping("delete/{id}")

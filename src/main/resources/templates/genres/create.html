@@ -21,6 +21,25 @@
                       class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label for="iconClass" class="form-label">Icon</label>
+                <input id="iconClass" type="text" th:field="*{iconClass}" class="form-control"/>
+                <span th:if="${#fields.hasErrors('iconClass')}"
+                      th:errors="*{iconClass}"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">
+                    Description<small>(optional)</small>
+                </label>
+                <textarea id="description" th:field="*{description}" class="form-control" rows="3"></textarea>
+                <span th:if="${#fields.hasErrors('description')}"
+                      th:errors="*{description}"
+                      class="text-danger"></span>
+            </div>
+
+
             <div class="d-flex justify-content-between">
                 <a href="/admin/genres/" class="btn btn-secondary">Back to list</a>
                 <button type="submit" class="btn btn-primary">Save</button>

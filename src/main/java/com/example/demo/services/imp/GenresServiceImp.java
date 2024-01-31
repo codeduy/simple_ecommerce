@@ -16,11 +16,9 @@ import java.util.List;
 public class GenresServiceImp extends GenericServiceImp<Genres, GenresViewModel>
         implements GenresService {
 
-    private final GenresRepository genresRepository;
     @Autowired
     public GenresServiceImp(GenresRepository genresRepository) {
         super(genresRepository);
-        this.genresRepository = genresRepository;
     }
 
     @Override
@@ -32,6 +30,8 @@ public class GenresServiceImp extends GenericServiceImp<Genres, GenresViewModel>
     protected void loadFormIntoEntity(Genres entity, GenresViewModel form) {
         entity.setId(form.getId());
         entity.setName(form.getName());
+        entity.setIconClass(form.getIconClass());
+        entity.setDescription(form.getDescription());
     }
 
     @Override
@@ -39,6 +39,8 @@ public class GenresServiceImp extends GenericServiceImp<Genres, GenresViewModel>
         return GenresViewModel.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .iconClass(entity.getIconClass())
+                .description(entity.getDescription())
                 .books(entity.getBooks())
                 .createdOn(entity.getCreatedOn())
                 .updatedOn(entity.getUpdatedOn())
