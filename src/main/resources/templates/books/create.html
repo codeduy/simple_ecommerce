@@ -36,6 +36,7 @@
                               th:action="@{/admin/books/save}"
                               th:object="${form}"
                               enctype="multipart/form-data">
+
                             <span th:if="${#fields.hasErrors('imagePath')}"
                                   th:errors="*{imagePath}"
                                   class="text-danger"></span>
@@ -123,16 +124,36 @@
                                 </div>
                             </div>
 
-
-
                             <div class="mb-3">
-                                <button class="btn btn-outline-primary"
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#genresModal">
-                                    Choose an genres
-                                </button>
+                                <h6 class="form-label">Genres:</h6>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <th:block th:if="${form.genres}">
+                                            <button class="btn btn-outline-danger" disabled>
+                                                <i th:class="${form.genres.iconClass}"></i>
+                                            </button>
+                                            <span th:text="${form.genres.name}" class="h6"></span>
+                                        </th:block>
+                                        <th:block th:unless="${form.genres}">
+                                            <button class="btn btn-outline-danger" disabled>
+                                                <i class="fa-solid fa-x"></i>
+                                            </button>
+                                            <span>Unselected genres :(</span>
+                                        </th:block>
+                                    </div>
+
+                                    <div data-bs-toggle="tooltip"
+                                         data-bs-title="Choose other genres.">
+                                        <button class="btn btn-outline-primary"
+                                                type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#genresModal">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+
 
                             <div class="d-flex justify-content-between">
                                 <a href="/admin/products/" class="btn btn-secondary">Back to list</a>

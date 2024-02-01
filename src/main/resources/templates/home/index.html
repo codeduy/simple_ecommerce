@@ -3,11 +3,58 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layouts/main.html}" >
+      layout:decorate="~{layouts/main.html}">
 
 <div layout:fragment="content">
 
     <div class="container">
+
+        <!-- Banner -->
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active ratio ratio-21x9"
+                     data-bs-interval="2000">
+                    <img src="https://pos.nvncdn.com/fd5775-40602/bn/20210925_ls2nzuWUp9XE5MliaPH6A7Wm.png"
+                         class="d-block w-100"
+                         alt="...">
+                </div>
+                <div class="carousel-item ratio ratio-21x9"
+                     data-bs-interval="2000">
+                    <img src="https://pos.nvncdn.com/fd5775-40602/bn/20210309_joW6gw7GqM0cRgueXeAWQECb.jpg"
+                         class="d-block w-100"
+                         alt="...">
+                </div>
+                <div class="carousel-item ratio ratio-21x9"
+                     data-bs-interval="2000">
+                    <img src="https://pos.nvncdn.com/fd5775-40602/bn/20210111_NMckhD7eeQrXRXAe95VaGhUs.jpg"
+                         class="d-block w-100"
+                         alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- End Banner -->
+
+        <!-- Genres -->
+        <div>
+            <h1>What Books Do You Like To Read?</h1>
+            <div class="d-flex justify-content-center gap-2">
+                <a th:each="item : ${genres}"
+                   href="#"
+                   class="btn btn-outline-primary">
+                    <i th:class="${item.iconClass}"></i>
+                    <span th:text="${item.name}"></span>
+                </a>
+            </div>
+        </div>
+
 
         <h4 class="my-4">Newest product</h4>
 

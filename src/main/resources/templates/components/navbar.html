@@ -64,54 +64,58 @@
 <!--        </div>-->
 <!--    </nav>-->
 
-    <nav layout:fragment="navbar"
-         class="navbar bg-body-tertiary fixed-top">
+<nav layout:fragment="navbar"
+     class="navbar bg-body-tertiary fixed-top">
 
-        <div class="container">
-            <a class="navbar-brand me-auto ms-2 fw-semibold" href="/">FAHASA</a>
+    <div class="container">
+        <a class="navbar-brand me-auto ms-2 fw-semibold" href="/">
+            <i class="fa-solid fa-tree text-success"></i>
+            <h4 class="d-inline">GrowBrain</h4>
+        </a>
 
-            <div type="button" data-bs-toggle="offcanvas"
-                 data-bs-target="#offcanvasNavbar"
-                 aria-controls="offcanvasNavbar"
-                 aria-label="Toggle navigation">
-                <i class="fa-solid fa-user"></i>
-                username
+        <button th:class="btn"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar"
+                aria-label="Toggle navigation">
+            <i class="fa-solid fa-user"></i>
+            username
+        </button>
+
+        <!-- Offcanva for user infor -->
+        <div class="offcanvas offcanvas-end"
+             tabindex="-1"
+             id="offcanvasNavbar"
+             data-bs-scroll="true"
+             aria-labelledby="offcanvasNavbarLabel">
+            <!--header-->
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Welcome Admin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
 
-            <!-- Offcanva for user infor -->
-            <div class="offcanvas offcanvas-end"
-                 tabindex="-1"
-                 id="offcanvasNavbar"
-                 data-bs-scroll="true"
-                 aria-labelledby="offcanvasNavbarLabel">
-                <!--header-->
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Welcome Admin</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/dashboard">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/books/">Books</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/authors/">Authors</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/genres/">Genres</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/publishers/">Publishers</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/books/">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/authors/">Authors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/genres/">Genres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/publishers/">Publishers</a>
+                    </li>
+                </ul>
             </div>
-            <!-- end Offcanva for user infor -->
         </div>
-    </nav>
+        <!-- end Offcanva for user infor -->
+    </div>
+</nav>
 
 </html>

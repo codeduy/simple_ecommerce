@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/main.html}">
+
+<div layout:fragment="content">
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <div class="">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin/dashboard">Admin</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Banners</li>
+                </ol>
+            </nav>
+        </div>
+        <!--End Breadcrumb -->
+
+        <div class="text-end mb-3">
+            <a href="/admin/banners/create" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
+                Add new banners
+            </a>
+        </div>
+
+        <div th:if="${list.isEmpty()}">
+            <h4>No banner create :(</h4>
+        </div>
+
+        <div th:unless="${list.isEmpty()}"
+             class="row">
+
+            <div th:each="item : ${list}"
+                 class="col-6">
+                <div class="card p-2 mb-3 row" style="height: 200px;">
+                    <div class="d-flex justify-content-center col-11 bg-body-secondary">
+                        <img th:src="@{'/uploads/banners/' + ${item.imagePath}}"
+                             style="height: 180px;"
+                             class="w-100 object-fit-contain"
+                             alt="banner">
+                    </div>
+
+                    <div class="col-1">
+                        h
+                    </div>
+                </div>
+
+
+                <!--                    <a th:href="@{/admin/genres/update/{id}(id=${item.id})}"-->
+                <!--                       class="btn btn-warning">-->
+                <!--                        <i class="fa-solid fa-chevron-right"></i>-->
+                <!--                    </a>-->
+
+                <!--                    <a th:href="@{/admin/genres/delete/{id}(id=${item.id})}"-->
+                <!--                       class="btn btn-danger">-->
+                <!--                        Delete-->
+                <!--                    </a>-->
+            </div>
+        </div>
+
+    </div>
+</div>
+</html>

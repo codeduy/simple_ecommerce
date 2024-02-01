@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/main.html}">
+
+<div layout:fragment="content">
+    <div class="container">
+        <form role="form"
+              method="post"
+              th:action="@{/admin/banners/save}"
+              th:object="${form}"
+              enctype="multipart/form-data">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Image</label>
+                <input class="form-control" type="file" id="formFile" name="file">
+                <span th:if="${#fields.hasErrors('imagePath')}"
+                      th:errors="*{imagePath}"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="isActive" th:field="*{active}">
+                <label class="form-check-label" for="isActive">
+                    Active this banner
+                </label>
+                <span th:if="${#fields.hasErrors('active')}"
+                      th:errors="*{active}"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a href="/admin/banners/" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</html>
