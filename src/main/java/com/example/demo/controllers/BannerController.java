@@ -44,20 +44,17 @@ public class BannerController {
         model.addAttribute("form", form);
         return ACTION_TEMPLATE;
     }
-//
-//    @GetMapping("update/{id}")
-//    public String updatePage(
-//            @PathVariable("id") long id,
-//            Model model) {
-//        setMessageForDetailView(model, false);
-//
-//        Book entity = bookService.findById(id);
-//        BookViewModel form = bookService.mapToViewModel(entity);
-//        model.addAttribute("form", form);
-//        setDataForSelect(model);
-//        return ACTION_TEMPLATE;
-//    }
-//
+
+    @GetMapping("update/{id}")
+    public String updatePage(
+            @PathVariable("id") long id,
+            Model model) {
+        var entity = bannerService.findById(id);
+        var form = bannerService.mapToViewModel(entity);
+        model.addAttribute("form", form);
+        return ACTION_TEMPLATE;
+    }
+
     @PostMapping("save")
     public String handleSave(
             @RequestParam("file") MultipartFile file,

@@ -35,7 +35,7 @@
             <div th:each="item : ${list}"
                  class="col-6">
                 <div class="card p-2 mb-3 row" style="height: 200px;">
-                    <div class="d-flex justify-content-center col-11 bg-body-secondary">
+                    <div class="d-flex justify-content-center col-11">
                         <img th:src="@{'/uploads/banners/' + ${item.imagePath}}"
                              style="height: 180px;"
                              class="w-100 object-fit-contain"
@@ -43,7 +43,10 @@
                     </div>
 
                     <div class="col-1">
-                        h
+                        <a th:href="@{/admin/banners/update/{id}(id=${item.id})}"
+                           class="btn btn-warning">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
                     </div>
                 </div>
 

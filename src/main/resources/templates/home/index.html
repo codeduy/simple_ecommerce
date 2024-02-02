@@ -12,29 +12,20 @@
         <!-- Banner -->
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active ratio ratio-21x9"
+                <div th:each="item: ${banners}"
+                     class="carousel-item ratio ratio-21x9"
                      data-bs-interval="2000">
-                    <img src="https://pos.nvncdn.com/fd5775-40602/bn/20210925_ls2nzuWUp9XE5MliaPH6A7Wm.png"
+                    <img th:src="@{'/uploads/banners/' + ${item.imagePath}}"
                          class="d-block w-100"
-                         alt="...">
-                </div>
-                <div class="carousel-item ratio ratio-21x9"
-                     data-bs-interval="2000">
-                    <img src="https://pos.nvncdn.com/fd5775-40602/bn/20210309_joW6gw7GqM0cRgueXeAWQECb.jpg"
-                         class="d-block w-100"
-                         alt="...">
-                </div>
-                <div class="carousel-item ratio ratio-21x9"
-                     data-bs-interval="2000">
-                    <img src="https://pos.nvncdn.com/fd5775-40602/bn/20210111_NMckhD7eeQrXRXAe95VaGhUs.jpg"
-                         class="d-block w-100"
-                         alt="...">
+                         alt="banner">
                 </div>
             </div>
+
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
+
             <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
@@ -74,7 +65,8 @@
                     </div>
 
                     <img src="https://images-na.ssl-images-amazon.com/images/I/61rC7j690VL._AC_SL1500_.jpg"
-                         class="card-img-top p-4">
+                         class="card-img-top p-4"
+                         alt="product">
 
                     <div class="card-body">
                         <div>
