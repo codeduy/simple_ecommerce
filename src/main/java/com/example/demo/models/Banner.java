@@ -14,4 +14,5 @@ import lombok.*;
 public class Banner extends BaseEntity {
     private String imagePath;
     private boolean isActive;
+    private Integer orderNumber;
 }

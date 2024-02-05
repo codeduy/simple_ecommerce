@@ -23,8 +23,10 @@
             </a>
         </div>
 
-        <ul style="list-style: none;">
-            <li th:each="item : ${list}">
+        <div th:unless="${list.isEmpty()}"
+             class="row">
+            <div th:each="item : ${list}"
+                 class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card p-2 mb-3">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex gap-2 align-items-center">
@@ -41,14 +43,14 @@
                         </a>
                     </div>
 
-
 <!--                    <a th:href="@{/admin/genres/delete/{id}(id=${item.id})}"-->
 <!--                       class="btn btn-danger">-->
 <!--                        Delete-->
 <!--                    </a>-->
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </div>
+
 </html>

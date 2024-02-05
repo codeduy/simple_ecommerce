@@ -25,6 +25,7 @@ public class BannerServiceImp
                 .id(entity.getId())
                 .imagePath(entity.getImagePath())
                 .isActive(entity.isActive())
+                .orderNumber(entity.getOrderNumber())
                 .build();
     }
 
@@ -36,6 +37,7 @@ public class BannerServiceImp
     @Override
     protected void loadFormIntoEntity(Banner entity, BannerViewModel form) {
         entity.setActive(form.isActive());
+        entity.setOrderNumber(form.getOrderNumber());
         final boolean hasFileUpload =  form.getImagePath() != null;
         if (hasFileUpload) {
             entity.setImagePath(form.getImagePath());

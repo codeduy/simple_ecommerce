@@ -68,9 +68,9 @@ public class BookController {
     }
 
     @PostMapping("save")
-    public String handleSave(
+    public String handleSave (
+            @RequestParam("file") MultipartFile file,
             @Valid @ModelAttribute("form") BookViewModel form,
-            @PathVariable("file") MultipartFile file,
             BindingResult result,
             Model model) throws Exception {
 

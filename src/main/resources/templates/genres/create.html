@@ -24,9 +24,15 @@
             <div class="mb-3">
                 <label for="iconClass" class="form-label">Icon</label>
                 <input id="iconClass" type="text" th:field="*{iconClass}" class="form-control"/>
-                <span th:if="${#fields.hasErrors('iconClass')}"
+                <span th:if="${#fields.hasErrors('description')}"
                       th:errors="*{iconClass}"
                       class="text-danger"></span>
+                <span id="iconClassError" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <h6>Preview icon</h6>
+                <div id="iconClassPreview"></div>
             </div>
 
             <div class="mb-3">
@@ -47,4 +53,41 @@
         </form>
     </div>
 </div>
+
+<th:block layout:fragment="_script">
+    <script>
+        function extractClassFromString(htmlString) {
+            // Sử dụng biểu thức chính quy để trích xuất giá trị của thuộc tính class
+            let match = htmlString.match(/<i\s+class="([^"]+)"\s*><\/i>/);
+
+            // Kiểm tra xem có sự trùng khớp không và trả về giá trị class nếu có
+            if (match) {
+                return match[1];
+            } else {
+                return null; // Trả về null nếu không tìm thấy giá trị class
+            }
+        }
+
+        $(document).ready(function(){
+            $("#iconClass").change(function() {
+                const iconClassError = $('#iconClassError');
+                iconClassError.text('')
+
+                let iconClassString = extractClassFromString($(this).val())
+                if (iconClassString != null) {
+                    $(this).val(iconClassString)
+                    const element = $("<i></i>").addClass(iconClassString);
+                    const iconClassPreview = $('#iconClassPreview');
+                    iconClassPreview.empty();
+                    iconClassPreview.append(element);
+                } else {
+                    iconClassError.text('Invalid icon :(')
+                }
+            });
+        });
+
+    </script>
+
+</th:block>
+
 </html>

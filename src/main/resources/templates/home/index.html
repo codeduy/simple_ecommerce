@@ -8,12 +8,12 @@
 <div layout:fragment="content">
 
     <div class="container">
-
         <!-- Banner -->
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div th:each="item: ${banners}"
                      class="carousel-item ratio ratio-21x9"
+                     th:classappend="${item.orderNumber} !=1 ? '': 'active'"
                      data-bs-interval="2000">
                     <img th:src="@{'/uploads/banners/' + ${item.imagePath}}"
                          class="d-block w-100"
@@ -34,8 +34,8 @@
         <!-- End Banner -->
 
         <!-- Genres -->
-        <div>
-            <h1>What Books Do You Like To Read?</h1>
+        <div class="my-3">
+            <h2 class="text-center text-uppercase mb-3">Genres</h2>
             <div class="d-flex justify-content-center gap-2">
                 <a th:each="item : ${genres}"
                    href="#"
@@ -46,69 +46,82 @@
             </div>
         </div>
 
+        <!-- New product-->
+        <div class="my-3">
+            <h2 class="text-center text-uppercase mb-3">Newest product</h2>
 
-        <h4 class="my-4">Newest product</h4>
+            <th:block th:if="${list.isEmpty()}">
+                <h3> Nothing found </h3>
+            </th:block>
 
-        <div th:if="${list.isEmpty()}">
-            <h3> Nothing found </h3>
-        </div>
+            <div class="row row-cols-2 row-cols-md-5"
+                 th:unless="${list.isEmpty()}">
+                <div th:each="item : ${list}"
+                     class="col">
 
-        <div class="row">
-            <!-- Card -->
-            <div th:each="item : ${list}" class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card">
+                    <a th:href="@{/products/{id}(id=${item.id})}"
+                       class="text-decoration-none">
 
-                    <div class="text-end">
-                        <a href="#" class="btn" data-bs-toggle="tooltip" data-bs-title="Mark this product">
-                            <i class="fa-regular fa-bookmark"></i>
-                        </a>
-                    </div>
+                        <!-- Card -->
+                        <div class="card p-2 mb-3">
+                            <div class="ratio ratio-1x1">
+                                <img th:src="@{'/uploads/books/' + ${item.imagePath}}"
+                                     class="card-img-top object-fit-contain"
+                                     alt="product">
+                            </div>
 
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/61rC7j690VL._AC_SL1500_.jpg"
-                         class="card-img-top p-4"
-                         alt="product">
 
-                    <div class="card-body">
-                        <div>
-                            <h5 class="card-title" th:text="${item.name}">Product name</h5>
-                            <div class="d-flex justify-content-start gap-1">
-                                <h6>$</h6>
-                                <h6 class="card-title" th:text="${item.price}">$999</h6>
+                            <div class="card-body text-center">
+                                <h5 class="card-title"
+                                    th:text="${item.name}"></h5>
+
+                                <span class="h6 card-title text-warning">
+                                    $<th:block th:text="${item.price}">Error</th:block>
+                                </span>
+
+
+                                <!--                            &lt;!&ndash; Rating &ndash;&gt;-->
+                                <!--                            <div class="mt-2">-->
+                                <!--                                <div class="d-flex justfify-content-start gap-2">-->
+                                <!--                            <span class="text-warning">-->
+                                <!--                                <i class="fa-regular fa-star"></i>-->
+                                <!--                            </span>-->
+                                <!--                                    <span class="text-warning">-->
+                                <!--                                <i class="fa-regular fa-star"></i>-->
+                                <!--                            </span>-->
+                                <!--                                    <span class="text-warning">-->
+                                <!--                                <i class="fa-regular fa-star"></i>-->
+                                <!--                            </span>-->
+                                <!--                                    <span class="text-warning">-->
+                                <!--                                <i class="fa-regular fa-star"></i>-->
+                                <!--                            </span>-->
+                                <!--                                    <span class="text-warning">-->
+                                <!--                                <i class="fa-regular fa-star"></i>-->
+                                <!--                            </span>-->
+                                <!--                                </div>-->
+                                <!--                            </div>-->
+
+                                <!--                            <a th:href="@{/templates/books/{productId}/update(productId=${item.id})}"-->
+                                <!--                               class="btn btn-warning">-->
+                                <!--                                update-->
+                                <!--                            </a>-->
                             </div>
                         </div>
+                        <!-- End card -->
+                    </a>
 
-                        <a href="#" class="btn btn-primary">Buy now</a>
-
-                        <!-- Rating -->
-                        <div class="mt-2">
-                            <div class="d-flex justfify-content-start gap-2">
-                            <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                                <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                                <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                                <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                                <span class="text-warning">
-                                <i class="fa-regular fa-star"></i>
-                            </span>
-                            </div>
-                        </div>
-
-                        <a th:href="@{/templates/books/{productId}/update(productId=${item.id})}"
-                           class="btn btn-warning">
-                            update
-                        </a>
-                    </div>
                 </div>
+
             </div>
-            <!-- End card -->
         </div>
+        <!--End New product-->
+
+        <div class="bg-info ">
+            akjhfkajhfl
+            skjadhfkj
+            <h1>fkjslh</h1>
+        </div>
+
     </div>
 </div>
 

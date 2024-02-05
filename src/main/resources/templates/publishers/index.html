@@ -23,8 +23,13 @@
             </a>
         </div>
 
-        <ul style="list-style: none">
-            <li th:each="item : ${list}">
+
+        <div th:if="${list.isEmpty()}">
+            <h1>Nothing here</h1>
+        </div>
+
+        <div th:unless="${list.isEmpty()}" class="row">
+            <div th:each="item : ${list}" class="col-12 col-sm-6 col-md-4">
                 <div class="card mb-3 p-2">
                     <div class="d-flex gap-2 align-items-end justify-content-between">
 
@@ -41,8 +46,8 @@
 
                     </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
 
     </div>
 </div>

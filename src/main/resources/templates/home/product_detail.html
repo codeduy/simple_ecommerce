@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/main.html}">
+
+<div layout:fragment="content">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-9 bg-info">
+                <div class="row p-2">
+                    <div class="col-6 bg-warning">
+                        <div class="ratio ratio-1x1">
+                            <img th:src="@{'/uploads/books/' + ${item.imagePath}}"
+                                 class="card-img-top object-fit-contain"
+                                 alt="product">
+                        </div>
+
+                    </div>
+                    <div class="col-6 bg-secondary">
+                        <h1>sxcs</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 bg-danger">
+                <h2>abc</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

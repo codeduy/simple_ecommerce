@@ -14,4 +14,5 @@ import lombok.experimental.SuperBuilder;
 public class BannerViewModel extends BaseViewModel {
     private String imagePath;
     private boolean isActive;
+    private Integer orderNumber;
 }
