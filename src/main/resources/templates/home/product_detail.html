@@ -9,27 +9,125 @@
 
     <div class="container">
 
-        <div class="row">
-            <div class="col-9 bg-info">
-                <div class="row p-2">
-                    <div class="col-6 bg-warning">
-                        <div class="ratio ratio-1x1">
-                            <img th:src="@{'/uploads/books/' + ${item.imagePath}}"
-                                 class="card-img-top object-fit-contain"
-                                 alt="product">
-                        </div>
+        <!-- Book  info -->
+        <div class="row mb-3">
+            <div class="col-6 border rounded p-4">
+                <!-- Image -->
+                <div class="ratio ratio-1x1">
+                    <img th:src="@{'/uploads/books/' + ${item.imagePath}}"
+                         class="card-img-top object-fit-contain"
+                         alt="product">
+                </div>
 
+            </div>
+
+            <div class="col-6 p-4">
+                <h2 th:text="${item.name}"></h2>
+                <h6 class="text-muted">
+                    Author:
+                    <th:block th:text="${item.author.name}"></th:block>
+                </h6>
+                <!-- Rating -->
+                <div class="d-flex gap-2 my-2">
+                    <div class="d-flex gap-2 text-warning">
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
                     </div>
-                    <div class="col-6 bg-secondary">
-                        <h1>sxcs</h1>
+                    <span class="text-muted">(1.343)</span>
+                </div>
+                <!-- End Rating -->
+
+                <div class="d-flex gap-2 my-2">
+                    <h5 class="text-danger" th:text="${item.price}"></h5>
+                    <h6 class="text-muted">Old price: 1000d</h6>
+                </div>
+
+                <div class="my-2">
+                    <a class="btn btn-primary btn-lg">
+                        <i class="fa-regular fa-money-bill-1"></i>
+                        Buy now
+                    </a>
+                    <a class="btn btn-outline-primary btn-lg">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Add to cart
+                    </a>
+                </div>
+                <!-- Share -->
+                <div class="my-2 d-flex gap-2 align-items-start">
+                    <h6 class="text-muted">It's a good book. Share now</h6>
+                    <!-- Facebook -->
+                    <div class="d-flex gap-2 align-items-center">
+                        <span class="badge text-bg-primary">
+                            <i class="fa-brands fa-facebook"></i>
+                            Share
+                        </span>
                     </div>
+                    <!-- Pinterest-->
+                    <div class="d-flex gap-2 align-items-center">
+                        <span class="badge text-bg-danger">
+                            <i class="fa-brands fa-pinterest"></i>
+                            Share
+                        </span>
+                    </div>
+
+                    <!-- X -->
+                    <div class="d-flex gap-2 align-items-center">
+                        <span class="badge text-bg-dark">
+                           <i class="fa-brands fa-x-twitter"></i>
+                            Share
+                        </span>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-3 bg-danger">
-                <h2>abc</h2>
+        </div>
+        <!-- End Book  info -->
+
+        <!-- Tab -->
+        <div class="row">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fs-1 active"
+                            id="home-tab" data-bs-toggle="tab"
+                            data-bs-target="#home-tab-pane" type="button"
+                            role="tab" aria-controls="home-tab-pane"
+                            aria-selected="true">
+                        Description
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fs-1"
+                            id="profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#profile-tab-pane"
+                            type="button" role="tab"
+                            aria-controls="profile-tab-pane"
+                            aria-selected="false">
+                        Reviews
+                    </button>
+                </li>
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active"
+                     id="home-tab-pane"
+                     role="tabpanel"
+                     aria-labelledby="home-tab"
+                     tabindex="0">
+                    <p>
+                        m Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                    comment here
+                </div>
             </div>
         </div>
-    </div>
+        <!-- End Tab -->
 
+    </div>
 </div>
 </html>

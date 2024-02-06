@@ -190,6 +190,12 @@
                         </div>
                         <!-- End Preview and upload image-->
 
+                        <!-- Optional field -->
+                        <div class="col-12">
+                            <textarea id="summernote" rows="10"></textarea>
+                        </div>
+                        <!-- End Optional field -->
+
                         <!-- Button -->
                         <div class="col-12 d-flex justify-content-between">
                             <a href="/admin/books/" class="btn btn-secondary">
@@ -329,24 +335,29 @@
 <th:block layout:fragment="_script">
     <script src="/static/js/previewImage.js"></script>
     <script>
-        $("[data-author-id]").click(function () {
-            let id = $(this).data('author-id');
-            $("#authorId").val(id);
-            console.log('Data-id:', id);
-        })
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                lang: 'ko-KR' // default: 'en-US'
+            });
 
-        $("[data-genres-id]").click(function () {
-            let id = $(this).data('genres-id');
-            $("#genresId").val(id);
-            console.log('Data-id:', id);
-        })
+            $("[data-author-id]").click(function () {
+                let id = $(this).data('author-id');
+                $("#authorId").val(id);
+                console.log('Data-id:', id);
+            })
 
-        $("[data-publisher-id]").click(function () {
-            let id = $(this).data('publisher-id');
-            $("#publisherId").val(id);
-            console.log('Data-id:', id);
-        })
+            $("[data-genres-id]").click(function () {
+                let id = $(this).data('genres-id');
+                $("#genresId").val(id);
+                console.log('Data-id:', id);
+            })
 
+            $("[data-publisher-id]").click(function () {
+                let id = $(this).data('publisher-id');
+                $("#publisherId").val(id);
+                console.log('Data-id:', id);
+            })
+        });
     </script>
 </th:block>
 

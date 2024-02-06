@@ -24,6 +24,7 @@ public class BookViewModel extends BaseViewModel {
     private Double price;
     private String imagePath;
     private Boolean isActive = true;
+    private String description;
     @NotNull(message = "Author can't be blank")
     private Long authorId;
     private Author author;
