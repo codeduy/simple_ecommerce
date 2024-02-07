@@ -42,6 +42,7 @@ public class BookServiceImp
     protected void loadFormIntoEntity(Book entity, BookViewModel form) {
         entity.setName(form.getName());
         entity.setPrice(form.getPrice());
+        entity.setDescription(form.getDescription());
         entity.setGenres(form.getGenres());
         entity.setPublisher(form.getPublisher());
         entity.setAuthor(form.getAuthor());
@@ -52,21 +53,6 @@ public class BookServiceImp
         }
     }
 
-//    public List<Book> listAll() {
-//        return bookRepository
-//                .findAll(Sort.by(Sort.Direction.DESC, "updatedOn"));
-//    }
-
-//    public Book findById(long id) {
-//        return bookRepository
-//                .findById(id)
-//                .orElse(null);
-//    }
-
-//    public void delete(long id) {
-//        bookRepository.deleteById(id);
-//    }
-
     public BookViewModel mapToViewModel(Book entity) {
         return BookViewModel.builder()
                 .id(entity.getId())
@@ -74,6 +60,7 @@ public class BookServiceImp
                 .price(entity.getPrice())
                 .imagePath(entity.getImagePath())
                 .isActive(entity.getIsActive())
+                .description(entity.getDescription())
                 .author(entity.getAuthor())
                 .authorId(entity.getAuthor().getId())
                 .genres(entity.getGenres())
@@ -86,53 +73,6 @@ public class BookServiceImp
                 .updatedOn(entity.getUpdatedOn())
                 .build();
     }
-
-//    @Override
-//    public Book save(BookViewModel form) throws AppValidationException {
-//        var entity = new Book();
-//        // update case -> check entity exist
-//        if (form.getId() != null) {
-//            entity = bookRepository.findById(form.getId()).orElseThrow(
-//                    () -> new AppValidationException(
-//                            "Book is not found",
-//                            "id",
-//                            "id doesn't exist")
-//            );
-//        }
-//        // check author
-//        var author = authorService.findById(form.getAuthorId());
-//        if (author == null) {
-//            throw new AppValidationException(
-//                    "Author is not found",
-//                    "authorId",
-//                    "authorId doesn't exist"
-//            );
-//        }
-//        entity.setAuthor(author);
-//        // check publisher
-//        var publisher = publisherService.findById(form.getPublisherId());
-//        if (publisher == null) {
-//            throw new AppValidationException(
-//                    "publisher is not found",
-//                    "publisherId",
-//                    "publisherId doesn't exist"
-//            );
-//        }
-//        entity.setPublisher(publisher);
-//        // check genres
-//        var genres = genresService.findById(form.getGenresId());
-//        if (genres == null) {
-//            throw new AppValidationException(
-//                    "genres is not found",
-//                    "genresId",
-//                    "genresId doesn't exist"
-//            );
-//        }
-//        entity.setGenres(genres);
-//        // get input from form
-//        setEntity(entity, form);
-//        return bookRepository.save(entity);
-//    }
 
     @Override
     public Book save(BookViewModel form)

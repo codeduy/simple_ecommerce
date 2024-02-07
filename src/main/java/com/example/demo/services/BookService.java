@@ -6,5 +6,4 @@ import com.example.demo.viewmodels.BookViewModel;
 
 public interface BookService
         extends GenericService<Book, BookViewModel> {
-
 }

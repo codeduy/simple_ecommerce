@@ -52,7 +52,7 @@
 
 
                         <!-- Form field -->
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-6 mb-3">
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Product name</label>
@@ -169,7 +169,7 @@
                         <!-- End Form field -->
 
                         <!-- Preview and upload image-->
-                        <div class="col-12 col-md-6 d-flex align-items-center p-4">
+                        <div class="col-12 col-md-6 d-flex align-items-center p-4 mb-3">
                             <div class="btn rounded w-100 h-100 bg-secondary
                                 bg-body-tertiary d-flex justify-content-center
                                  align-items-center"
@@ -191,13 +191,34 @@
                         <!-- End Preview and upload image-->
 
                         <!-- Optional field -->
-                        <div class="col-12">
-                            <textarea id="summernote" rows="10"></textarea>
+                        <div class="col-12 mb-3">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed bg-secondary-subtle"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#flush-collapseOne"
+                                                aria-expanded="false"
+                                                aria-controls="flush-collapseOne">
+                                            Optional field
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <label for="summernote" class="form-label">Description</label>
+                                            <textarea id="summernote" th:field="*{description}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- End Optional field -->
 
                         <!-- Button -->
-                        <div class="col-12 d-flex justify-content-between">
+                        <div class="col-12 d-flex justify-content-between mb-3">
                             <a href="/admin/books/" class="btn btn-secondary">
                                 <i class="fa-solid fa-chevron-left"></i>
                                 Back
@@ -362,3 +383,4 @@
 </th:block>
 
 </html>
+
