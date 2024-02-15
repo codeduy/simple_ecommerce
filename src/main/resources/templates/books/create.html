@@ -55,7 +55,7 @@
                         <div class="col-12 col-md-6 mb-3">
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Product name</label>
+                                <label for="name" class="form-label fw-semibold">Product name</label>
                                 <input id="name" type="text" th:field="*{name}" class="form-control"/>
                                 <span th:if="${#fields.hasErrors('name')}"
                                       th:errors="*{name}"
@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="price" class="form-label">Product price</label>
+                                <label for="price" class="form-label fw-semibold">Product price</label>
                                 <input id="price" type="number" th:field="*{price}" class="form-control"/>
                                 <span th:if="${#fields.hasErrors('price')}"
                                       th:errors="*{price}"
@@ -73,18 +73,8 @@
                             <div class="mb-3">
                                 <h6 class="form-label">Publisher:</h6>
                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-end gap-2">
-                                        <th:block th:if="${form.publisher}">
-                                            <img th:src="@{'/uploads/publishers/' + ${form.publisher.imagePath}}"
-                                                 alt="publisher image"
-                                                 style="width: 40px; height: 40px;"
-                                                 class="rounded"/>
-                                            <span th:text="${form.publisher.name}" class="h6"></span>
-                                        </th:block>
-                                        <th:block th:unless="${form.publisher}">
-                                            <span>Unselected :(</span>
-                                        </th:block>
-                                    </div>
+
+                                    <div class="d-flex align-items-end gap-2" id="publisherDisplay"></div>
 
                                     <div data-bs-toggle="tooltip"
                                          data-bs-title="Choose other publisher.">
@@ -105,18 +95,7 @@
                             <div class="mb-3">
                                 <h6 class="form-label">Author:</h6>
                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-end gap-2">
-                                        <th:block th:if="${form.author}">
-                                            <img th:src="@{'/uploads/authors/' + ${form.author.imagePath}}"
-                                                 alt="author image"
-                                                 style="width: 40px; height: 40px;"
-                                                 class="rounded"/>
-                                            <span th:text="${form.author.name}" class="h6"></span>
-                                        </th:block>
-                                        <th:block th:unless="${form.author}">
-                                            <span>Unselected :(</span>
-                                        </th:block>
-                                    </div>
+                                    <div class="d-flex align-items-end gap-2" id="authorDisplay"></div>
 
                                     <div data-bs-toggle="tooltip"
                                          data-bs-title="Choose other author.">
@@ -136,20 +115,7 @@
                             <div class="mb-3">
                                 <h6 class="form-label">Genres:</h6>
                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <th:block th:if="${form.genres}">
-                                            <button class="btn btn-outline-danger" disabled>
-                                                <i th:class="${form.genres.iconClass}"></i>
-                                            </button>
-                                            <span th:text="${form.genres.name}" class="h6"></span>
-                                        </th:block>
-                                        <th:block th:unless="${form.genres}">
-                                            <button class="btn btn-outline-danger" disabled>
-                                                <i class="fa-solid fa-x"></i>
-                                            </button>
-                                            <span>Unselected genres :(</span>
-                                        </th:block>
-                                    </div>
+                                    <div class="d-flex align-items-center gap-2" id="genresDisplay"></div>
 
                                     <div data-bs-toggle="tooltip"
                                          data-bs-title="Choose other genres.">
@@ -244,29 +210,33 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="authorModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="authorModalLabel">Choose one author</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group">
-                        <li th:each="item : ${authors}" class="list-group-item">
-                            <div class="d-flex justify-content-between">
+                    <div class="row-cols-1">
+                        <div th:each="item : ${authors}" class="col">
 
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="radio"
-                                           name="author-id-radio"
-                                           th:id="${'id_67' + item.id}"
-                                           th:attr="data-author-id=${item.id}">
-                                    <label class="form-check-label"
-                                           th:for="${'id_67' + item.id}"
-                                           th:text="${item.name}"></label>
-                                </div>
+                            <input type="radio" class="btn-check"
+                                   th:id="${'id_6651' + item.id}"
+                                   th:attr="data-author-id=${item.id}"
+                                   autocomplete="off"
+                                   name="authorsRadio"
+                                   hidden="hidden">
 
-                            </div>
-                        </li>
-                    </ul>
+                            <label class="btn w-100 d-flex align-items-center gap-2"
+                                   th:for="${'id_6651' + item.id}">
+                                <img alt="img"
+                                     style="width: 40px; height: 40px;"
+                                     class="border rounded"
+                                     th:src="@{'/uploads/authors/' + ${item.imagePath}}" />
+                                <th:block th:text="${item.name}"></th:block>
+                            </label>
+
+                        </div>
+                    </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
@@ -322,25 +292,29 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group">
-                        <li th:each="item : ${publishers}" class="list-group-item">
-                            <div class="d-flex justify-content-between">
+                    <div class="row-cols-1">
+                        <div th:each="item : ${publishers}" class="col">
 
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="radio"
-                                           name="author-id-radio"
-                                           th:id="${'id_67' + item.id}"
-                                           th:attr="data-publisher-id=${item.id}">
-                                    <label class="form-check-label"
-                                           th:for="${'id_67' + item.id}"
-                                           th:text="${item.name}"></label>
-                                </div>
+                            <input type="radio" class="btn-check"
+                                   th:id="${'id_67' + item.id}"
+                                   th:attr="data-publisher-id=${item.id}"
+                                   autocomplete="off"
+                                   name="publishersRadio"
+                                   hidden="hidden">
 
-                            </div>
-                        </li>
-                    </ul>
+                            <label class="btn w-100 d-flex align-items-center gap-2"
+                                   th:for="${'id_67' + item.id}">
+                                <img alt="img"
+                                     style="width: 40px; height: 40px;"
+                                     class="border rounded"
+                                     th:src="@{'/uploads/publishers/' + ${item.imagePath}}" />
+                                <th:block th:text="${item.name}"></th:block>
+                            </label>
+
+                        </div>
+                    </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
@@ -355,29 +329,106 @@
 <!-- add js for this file -->
 <th:block layout:fragment="_script">
     <script src="/static/js/previewImage.js"></script>
+    <!-- Set up variable -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let currentPublisher = /*[[${form.publisher}]]*/ null;
+        let currentAuthor = /*[[${form.author}]]*/ null;
+        let currentGenres = /*[[${form.genres}]]*/ null;
+
+        const publishers = /*[[${publishers}]]*/ [];
+        const authors = /*[[${authors}]]*/ [];
+        const genres = /*[[${genres}]]*/ [];
+
+        /*]]>*/
+    </script>
+    <!-- Code for this page -->
     <script>
+        function handleDisplayPublisher() {
+            const publisherDisplay = $("#publisherDisplay");
+
+            let htmlString = `<span>Unselected :(</span>`;
+            if (currentPublisher) {
+                htmlString =
+                    `<img src="/uploads/publishers/${currentPublisher.imagePath}"
+                              alt="publisher image"
+                              style="width: 40px; height: 40px;"
+                              class="rounded"/>
+                        <span class="h6">${currentPublisher.name}</span>`;
+            }
+
+            publisherDisplay.html(htmlString);
+        }
+
+        function handleDisplayAuthor() {
+            const authorDisplay = $("#authorDisplay");
+
+            let htmlString = `<span>Unselected :(</span>`;
+            if (currentAuthor) {
+                htmlString =
+                    `<img src="/uploads/authors/${currentAuthor.imagePath}"
+                          alt="author image"
+                          style="width: 40px; height: 40px;"
+                          class="rounded"/>
+                    <span class="h6">${currentAuthor.name}</span>`;
+            }
+
+            authorDisplay.html(htmlString);
+        }
+
+        function handleDisplayGenres() {
+            const genresDisplay = $("#genresDisplay");
+
+            let htmlString =
+                `<button class="btn btn-outline-danger" disabled>
+                    <i class="fa-solid fa-x"></i>
+                </button>
+                <span>Unselected genres :(</span>`;
+
+            if (currentGenres) {
+                htmlString =
+                    `<button class="btn btn-outline-dark" disabled>
+                        <i class="${currentGenres.iconClass}"></i>
+                    </button>
+                    <span class="h6">${currentGenres.name}</span>`;
+            }
+
+            genresDisplay.html(htmlString);
+        }
+
         $(document).ready(function() {
             $('#summernote').summernote({
-                lang: 'ko-KR' // default: 'en-US'
+                // lang: 'ko-KR' // default: 'en-US'
             });
 
             $("[data-author-id]").click(function () {
                 let id = $(this).data('author-id');
                 $("#authorId").val(id);
-                console.log('Data-id:', id);
+                currentAuthor = authors.find(x => x.id === id)
+                console.log('currentAuthor:', currentAuthor);
+                handleDisplayAuthor()
             })
 
             $("[data-genres-id]").click(function () {
                 let id = $(this).data('genres-id');
                 $("#genresId").val(id);
-                console.log('Data-id:', id);
+                currentGenres = genres.find(x=> x.id === id);
+                console.log('currentGenres:', currentGenres);
+                handleDisplayGenres();
             })
 
             $("[data-publisher-id]").click(function () {
                 let id = $(this).data('publisher-id');
                 $("#publisherId").val(id);
-                console.log('Data-id:', id);
+                currentPublisher = publishers.find(x=> x.id === id);
+                console.log('currentPublisher:', currentPublisher);
+                handleDisplayPublisher();
             })
+
+            handleDisplayPublisher();
+            handleDisplayAuthor();
+            handleDisplayGenres();
         });
     </script>
 </th:block>

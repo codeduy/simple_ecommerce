@@ -21,6 +21,7 @@ public class Book extends BaseEntity{
     private Double price;
     private String imagePath;
     private Boolean isActive = true;
+    @Column(length = 2000)
     private String description;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)

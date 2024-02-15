@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -21,6 +22,7 @@ public class Genres extends BaseEntity {
     private String name;
     private String iconClass;
     private String description;
+    @JsonIgnore
     @OneToMany(mappedBy = "genres", cascade = CascadeType.ALL)
     private Collection<Book> books;
 }

@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -20,6 +21,7 @@ public class Publisher extends BaseEntity {
     private String name;
     private String imagePath;
     private String description;
+    @JsonIgnore
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
     private Collection<Book> books;
 }
