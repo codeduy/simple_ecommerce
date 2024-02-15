@@ -220,6 +220,7 @@
                             <input type="radio" class="btn-check"
                                    th:id="${'id_6651' + item.id}"
                                    th:attr="data-author-id=${item.id}"
+                                   th:checked="${item.id}==${form.authorId}"
                                    autocomplete="off"
                                    name="authorsRadio"
                                    hidden="hidden">
@@ -254,26 +255,28 @@
                     <h1 class="modal-title fs-5" id="genresModalLabel">Choose a genres</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
-                    <ul class="list-group">
-                        <li th:each="item : ${genres}" class="list-group-item">
-                            <div class="d-flex justify-content-between">
+                    <div class="row-cols-1">
+                        <div th:each="item : ${genres}" class="col">
 
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="radio"
-                                           name="author-id-radio"
-                                           th:id="${'id_67' + item.id}"
-                                           th:attr="data-genres-id=${item.id}">
-                                    <label class="form-check-label"
-                                           th:for="${'id_67' + item.id}"
-                                           th:text="${item.name}"></label>
-                                </div>
+                            <input type="radio" class="btn-check"
+                                   th:id="${'id_66dr3' + item.id}"
+                                   th:attr="data-genres-id=${item.id}"
+                                   th:checked="${item.id}==${form.genresId}"
+                                   autocomplete="off"
+                                   name="genresRadio"
+                                   hidden="hidden">
 
-                            </div>
-                        </li>
-                    </ul>
+                            <label class="btn w-100 d-flex align-items-center gap-2 py-2"
+                                   th:for="${'id_66dr3' + item.id}">
+                                <i th:class="${item.iconClass}"></i>
+                                <th:block th:text="${item.name}"></th:block>
+                            </label>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
@@ -300,6 +303,7 @@
                                    th:attr="data-publisher-id=${item.id}"
                                    autocomplete="off"
                                    name="publishersRadio"
+                                   th:checked="${item.id}==${form.publisherId}"
                                    hidden="hidden">
 
                             <label class="btn w-100 d-flex align-items-center gap-2"
