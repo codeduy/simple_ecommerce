@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class HomeController {
     private static final String INDEX_TEMPLATE = "home/index";
     private static final String PRODUCT_DETAIL_TEMPLATE = "home/product_detail";
-
+    private static final String CART_TEMPLATE = "home/cart";
 
     private final BookService bookService;
     private final GenresService genresService;
@@ -36,10 +36,14 @@ public class HomeController {
     public String productDetail(
             @PathVariable("id") Long id,
             Model model) {
-
         var item = bookService.findById(id);
         model.addAttribute("item", item);
 
         return PRODUCT_DETAIL_TEMPLATE;
+    }
+
+    @GetMapping("/cart")
+    public String cartPage() {
+        return CART_TEMPLATE;
     }
 }

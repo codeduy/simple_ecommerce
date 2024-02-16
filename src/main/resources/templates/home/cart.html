@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/main.html}">
+
+<div layout:fragment="content">
+    <div class="container">
+
+        <div class="row" id="cartItemList"></div>
+
+    </div>
+</div>
+<th:block layout:fragment="_script">
+    <script>
+        function changeCartItemQuantity(productId, delta) {
+            let cart = getCart();
+            let item = cart.find(x => x.productId == productId);
+            console.log(item)
+            if (item) {
+                let newQuantity = item.quantity + delta;
+                item.quantity = newQuantity;
+                debugger
+                $(`#displayCartItemQuantity_${productId}`).text(newQuantity);
+                let totalPriceDisplay = $(`#totalPriceDisplay_${productId}`);
+                let price = totalPriceDisplay.attr("data-product-price");
+                let newTotalPriceString = newQuantity * price + '$';
+                totalPriceDisplay.text(newTotalPriceString);
+            }
+            saveCart(cart);
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            let cart = getCart();
+            console.log("cart", cart);
+            cart.forEach(i => {
+                console.log(i.productId);
+                i.productId && $.ajax({
+                    type: "GET",
+                    url: `/api/books/${i.productId}`,
+                    success: function(response) {
+                        // Xử lý dữ liệu trả về
+                        let htmlString = `
+                            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                                <div class="border rounded p-2 mb-3">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1 d-flex gap-2 align-items-start">
+                                            <img src="/uploads/books/${response.imagePath}"
+                                                 alt="book image"
+                                                 style="width: 40px; height: 40px;">
+                                            <div class="">
+                                                <h6 class="m-0">${response.name}</h6>
+                                                <div class="d-flex gap-2 justify-content-center">
+                                                    <small class="text-muted">
+                                                        ${response.price}$ x
+                                                        <span  id="displayCartItemQuantity_${i.productId}">
+                                                            ${i.quantity}
+                                                        </span>
+                                                    </small>
+                                                    <div class="">
+                                                        <!--Descrease button-->
+                                                        <button class="btn btn-light btn-sm"
+                                                                onclick="changeCartItemQuantity(${i.productId}, -1)">
+                                                            <i class="fa-solid fa-chevron-left text-danger"></i>
+                                                        </button>
+                                                        <!--Increase button-->
+                                                        <button class="btn btn-light btn-sm"
+                                                                onclick="changeCartItemQuantity(${i.productId}, 1)">
+                                                            <i class="fa-solid fa-chevron-right text-success"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <p class="m-0 text-primary">
+                                                    Total:
+                                                    <span id="totalPriceDisplay_${i.productId}"
+                                                          data-product-price="${response.price}">
+                                                        ${response.price * i.quantity}$
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!--Remove btn-->
+                                        <div class="btn btn-light btn-sm">
+                                            <i class="fa-regular fa-trash-can text-danger"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                        $("#cartItemList").append(htmlString);
+                    },
+                    error: function(xhr, status, error) {
+                        // Xử lý lỗi
+                        console.error(xhr.responseText);
+                        console.error(`Fail to fetch productId: ${i.productId}`);
+                    }
+                });
+            })
+        })
+    </script>
+</th:block>
+</html>
