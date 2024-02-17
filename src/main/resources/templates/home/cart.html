@@ -7,17 +7,66 @@
 
 <div layout:fragment="content">
     <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8" >
+                <div class="row" id="cartItemList"></div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="border rounded p-2 mb-3">
+                    <h4 class="">Discount</h4>
+                    <hr>
+                    <div class="">
+                        <div class="d-flex justify-content-between">
+                            <h6>Discount on July</h6>
+                            <a href="#" class="fs-6 text-decoration-underline">Detail</a>
+                        </div>
 
-        <div class="row" id="cartItemList"></div>
+                        <div class="mb-2">
+                            <small class="d-block text-muted">Don't apply for Textbooks</small>
+                        </div>
 
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <div class="flex-grow-1">
+                                <div class="progress"
+                                     role="progressbar"
+                                     aria-label="Warning example"
+                                     aria-valuenow="75"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    <div class="progress-bar text-bg-primary" style="width: 75%">75%</div>
+                                </div>
+                                <small style="font-size: small;">
+                                    Buy more 100$ to get this
+                                </small>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Buy more</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="text-muted mb-2">You can apply multiple discount codes</p>
+                </div>
+
+                <div class="border rounded p-2">
+                    <h4 class="">Total</h4>
+                    <hr>
+
+                    <div class="d-flex justify-content-start align-items-baseline gap-2 mb-2">
+                        <span>Total(included VAT):</span>
+                        <h4 class="text-danger">999$</h4>
+                    </div>
+
+                    <a class="btn btn-danger btn-lg w-100 mb-2" href="/check-out">Check out</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 <th:block layout:fragment="_script">
     <script>
         function changeCartItemQuantity(productId, delta) {
             let cart = getCart();
             let item = cart.find(x => x.productId == productId);
-            console.log(item)
             if (item) {
                 let newQuantity = item.quantity + delta;
                 item.quantity = newQuantity;
@@ -30,64 +79,77 @@
             }
             saveCart(cart);
         }
+
+        function removeFromCart(productId) {
+            debugger
+            let cart = getCart();
+            let newCart = cart.filter(x => x.productId !=  productId);
+            saveCart(newCart);
+            $(`#itemCartCard_${productId}`).remove();
+        }
+
+        function bluePrintCartItem(product, quantity) {
+            return `
+                <div class="col-12 col-sm-6 col-xl-4"
+                     id="itemCartCard_${product.id}">
+                    <div class="border rounded p-2 mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-grow-1 d-flex gap-2 align-items-start">
+                                <img src="/uploads/books/${product.imagePath}"
+                                     alt="book image"
+                                     style="width: 40px; height: 40px;">
+                                <div class="">
+                                    <h6 class="m-0">${product.name}</h6>
+                                    <div class="d-flex gap-2 justify-content-center">
+                                        <small class="text-muted">
+                                            ${product.price}$ x
+                                            <span  id="displayCartItemQuantity_${product.id}">
+                                                ${quantity}
+                                            </span>
+                                        </small>
+                                        <div class="">
+                                            <!--Descrease button-->
+                                            <button class="btn btn-light btn-sm"
+                                                    onclick="changeCartItemQuantity(${product.id}, -1)">
+                                                <i class="fa-solid fa-chevron-left text-danger"></i>
+                                            </button>
+                                            <!--Increase button-->
+                                            <button class="btn btn-light btn-sm"
+                                                    onclick="changeCartItemQuantity(${product.id}, 1)">
+                                                <i class="fa-solid fa-chevron-right text-success"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="m-0 text-primary">
+                                        Total:
+                                        <span id="totalPriceDisplay_${product.id}"
+                                              data-product-price="${product.price}">
+                                            ${product.price * quantity}$
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <!--Remove btn-->
+                            <button class="btn btn-light btn-sm"
+                                    onclick="removeFromCart(${product.id})">
+                                <i class="fa-regular fa-trash-can text-danger"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
     </script>
     <script>
         $(document).ready(function () {
             let cart = getCart();
-            console.log("cart", cart);
             cart.forEach(i => {
-                console.log(i.productId);
                 i.productId && $.ajax({
                     type: "GET",
                     url: `/api/books/${i.productId}`,
                     success: function(response) {
                         // Xử lý dữ liệu trả về
-                        let htmlString = `
-                            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                                <div class="border rounded p-2 mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <div class="flex-grow-1 d-flex gap-2 align-items-start">
-                                            <img src="/uploads/books/${response.imagePath}"
-                                                 alt="book image"
-                                                 style="width: 40px; height: 40px;">
-                                            <div class="">
-                                                <h6 class="m-0">${response.name}</h6>
-                                                <div class="d-flex gap-2 justify-content-center">
-                                                    <small class="text-muted">
-                                                        ${response.price}$ x
-                                                        <span  id="displayCartItemQuantity_${i.productId}">
-                                                            ${i.quantity}
-                                                        </span>
-                                                    </small>
-                                                    <div class="">
-                                                        <!--Descrease button-->
-                                                        <button class="btn btn-light btn-sm"
-                                                                onclick="changeCartItemQuantity(${i.productId}, -1)">
-                                                            <i class="fa-solid fa-chevron-left text-danger"></i>
-                                                        </button>
-                                                        <!--Increase button-->
-                                                        <button class="btn btn-light btn-sm"
-                                                                onclick="changeCartItemQuantity(${i.productId}, 1)">
-                                                            <i class="fa-solid fa-chevron-right text-success"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <p class="m-0 text-primary">
-                                                    Total:
-                                                    <span id="totalPriceDisplay_${i.productId}"
-                                                          data-product-price="${response.price}">
-                                                        ${response.price * i.quantity}$
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <!--Remove btn-->
-                                        <div class="btn btn-light btn-sm">
-                                            <i class="fa-regular fa-trash-can text-danger"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
+                        let htmlString = bluePrintCartItem(response, i.quantity);
 
                         $("#cartItemList").append(htmlString);
                     },

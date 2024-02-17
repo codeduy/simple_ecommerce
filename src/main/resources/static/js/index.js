@@ -17,4 +17,3 @@ $(document).ready(function(){
         new bootstrap.Tooltip(this);
     });
 });
-

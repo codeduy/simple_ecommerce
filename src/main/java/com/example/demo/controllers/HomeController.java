@@ -16,6 +16,7 @@ public class HomeController {
     private static final String INDEX_TEMPLATE = "home/index";
     private static final String PRODUCT_DETAIL_TEMPLATE = "home/product_detail";
     private static final String CART_TEMPLATE = "home/cart";
+    private static final String CHECK_OUT_TEMPLATE = "home/check_out";
 
     private final BookService bookService;
     private final GenresService genresService;
@@ -45,5 +46,10 @@ public class HomeController {
     @GetMapping("/cart")
     public String cartPage() {
         return CART_TEMPLATE;
+    }
+
+    @GetMapping("/check-out")
+    public String checkoutPage() {
+        return CHECK_OUT_TEMPLATE;
     }
 }
