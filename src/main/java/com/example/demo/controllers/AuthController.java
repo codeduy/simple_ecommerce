@@ -49,7 +49,7 @@ public class AuthController {
             bindingResult.rejectValue(
                     "rePassword",
                     "password.mismatch",
-                    "Mật khẩu không khớp");
+                    "Password incorrect");
         }
 
         if (userService.findByUsername(form.getUsername()) != null) {
